@@ -32,7 +32,10 @@ public class LifeGmEngine implements Runnable{
 		while (this.lifeContinue) {
 			System.out.println("LifeGmEngine.run lifeContinue");
 			try {
-				goLifeGm();
+//				goLifeGm();
+				
+				goLifeGmSemen();
+				
 				Thread.sleep(timeInt);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -41,7 +44,20 @@ public class LifeGmEngine implements Runnable{
 		
 		this.rootFrame.exitLifeForm();
 	}
+	
+	//////////////////////////////////////////////////
+	// Semen, please work on this!!
+	private void goLifeGmSemen() throws InterruptedException {
+		lifePoints = lifePanel.getPoints();
+		
+		lifePoints = lifeGmCalc.getNext(lifePoints);
+		lifePanel.setPoints(lifePoints); // repaint is here
+		
+		Thread.sleep(timeInt);
+	}
 
+	//////////////////////////////////////////////////
+	// old demo version
 	private void goLifeGm() throws InterruptedException {
 		while(this.go && this.lifeContinue) {
 			System.out.println("LifeGmEngine.run go");

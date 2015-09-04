@@ -91,6 +91,10 @@ public class LifePanel extends JPanel {
 		repaint();
 	}
 	
+	public Set<Point> getPoints() {
+		return alivePoints;
+	}
+	
 	public boolean hasSquareAlive(Point point) {
 		return alivePoints.contains(point);
 	}

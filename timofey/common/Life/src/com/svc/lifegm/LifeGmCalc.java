@@ -38,5 +38,12 @@ public class LifeGmCalc {
 		else
 			return lifePoints2;
 	}
+	
+	//////////////////////////////////////////////////
+	// Semen, please work on this!!
+	public Set<Point> getNext(Set<Point> lifePoints) {
+		
+		return null;
+	}
 
 }
