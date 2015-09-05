@@ -32,9 +32,9 @@ public class LifeGmEngine implements Runnable{
 		while (this.lifeContinue) {
 			System.out.println("LifeGmEngine.run lifeContinue");
 			try {
-//				goLifeGm();
+				goLifeGm();
 				
-				goLifeGmSemen();
+//				goLifeGmSemen();
 				
 				Thread.sleep(timeInt);
 			} catch (InterruptedException e) {
