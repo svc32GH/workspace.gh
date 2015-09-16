@@ -10,7 +10,7 @@ import com.svc.lifegm.form.LifeForm;
 
 public class LifeGmEngine implements Runnable{
 	
-	private static final int timeInt = 1000; // mili-seconds
+	private static final int timeInt = 100; // mili-seconds
 	
 	private Set<Point> lifePoints;
 	private LifePanel lifePanel;
@@ -32,9 +32,9 @@ public class LifeGmEngine implements Runnable{
 		while (this.lifeContinue) {
 			System.out.println("LifeGmEngine.run lifeContinue");
 			try {
-				goLifeGm();
+//				goLifeGm();
 				
-//				goLifeGmSemen();
+				goLifeGmSemen();
 				
 				Thread.sleep(timeInt);
 			} catch (InterruptedException e) {
@@ -48,12 +48,15 @@ public class LifeGmEngine implements Runnable{
 	//////////////////////////////////////////////////
 	// Semen, please work on this!!
 	private void goLifeGmSemen() throws InterruptedException {
-		lifePoints = lifePanel.getPoints();
-		
-		lifePoints = lifeGmCalc.getNext(lifePoints);
-		lifePanel.setPoints(lifePoints); // repaint is here
-		
-		Thread.sleep(timeInt);
+		while (this.go && this.lifeContinue) {
+			System.out.println("LifeGmEngine.run go");
+			lifePoints = lifePanel.getPoints();
+
+			lifePoints = lifeGmCalc.getNext2(lifePoints);
+			lifePanel.setPoints(lifePoints); // repaint is here
+
+			Thread.sleep(timeInt);
+		}
 	}
 
 	//////////////////////////////////////////////////
