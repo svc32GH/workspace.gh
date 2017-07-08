@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tpml1_2:TPML xmlns:tpml1_2="urn:x-schemas-db-com:tpmbase/tpml/tpml_1_2">
+	<tph:tpHeader xmlns:tph="urn:x-schemas-db-com:tpmbase/tpml/tpheader_1_2">
+		<tph:messageTimestamp>2017-01-19T13:37:52.277+00:00</tph:messageTimestamp>
+		<tph:messageSender>ITRAC</tph:messageSender>
+		<tph:originatingSystem>
+			<tph:name>ITRAC</tph:name>
+			<tph:location>LON</tph:location>
+		</tph:originatingSystem>
+		<tph:trackingId>IT1020182LU5_1</tph:trackingId>
+		<tph:tradeId>IT1020182LU5</tph:tradeId>
+		<tph:transactionId>IT1020182LU5</tph:transactionId>
+		<tph:versionNo>1</tph:versionNo>
+		<tph:event>
+			<tph:transaction>New</tph:transaction>
+			<tph:subType>Standard</tph:subType>
+			<tph:status>Confirmed</tph:status>
+		</tph:event>
+		<tph:ids>
+			<tph:id system="ITRAC">IT1020182LU5</tph:id>
+		</tph:ids>
+		<tph:businessData>
+			<tph:product>IRS</tph:product>
+			<tph:book>
+				<tph:name>EURO_SWAPS</tph:name>
+				<tph:location>GSD</tph:location>
+			</tph:book>
+			<tph:counterparty>RERNATALBWBH</tph:counterparty>
+			<tph:tradeDate>2017-01-19</tph:tradeDate>
+		</tph:businessData>
+	</tph:tpHeader>
+	<tpml1_2:body>
+		<tpml1_2:FpML version="4-2">
+			<fpml42:trade xmlns:fpml42="http://www.fpml.org/2005/FpML-4-2">
+				<fpml42:tradeHeader>
+					<fpml42:partyTradeIdentifier>
+						<fpml42:partyReference href="partyA"/>
+						<fpml42:tradeId tradeIdScheme="http://xml.partyA.com/trade-id">IT1020182LU5</fpml42:tradeId>
+					</fpml42:partyTradeIdentifier>
+					<fpml42:partyTradeIdentifier>
+						<fpml42:partyReference href="partyB"/>
+						<fpml42:tradeId tradeIdScheme="http://xml.partyB.com/trade-id">IT1020182LU5</fpml42:tradeId>
+					</fpml42:partyTradeIdentifier>
+					<fpml42:tradeDate>2017-01-19</fpml42:tradeDate>
+				</fpml42:tradeHeader>
+				<fpml42:swap>
+					<fpml42:productType productTypeScheme="http://www.fpml.org/coding-scheme/product-type-simple-1-0">InterestRate:IRSwap:FixedFloat</fpml42:productType>
+					<fpml42:swapStream id="fixedLeg">
+						<fpml42:payerPartyReference href="partyB"/>
+						<fpml42:receiverPartyReference href="partyA"/>
+						<fpml42:calculationPeriodDates id="fixedLegCalcPeriodDates">
+							<fpml42:effectiveDate>
+								<fpml42:unadjustedDate>2017-01-23</fpml42:unadjustedDate>
+								<fpml42:dateAdjustments>
+									<fpml42:businessDayConvention>NONE</fpml42:businessDayConvention>
+								</fpml42:dateAdjustments>
+							</fpml42:effectiveDate>
+							<fpml42:terminationDate>
+								<fpml42:unadjustedDate>2022-01-23</fpml42:unadjustedDate>
+								<fpml42:dateAdjustments>
+									<fpml42:businessDayConvention>MODFOLLOWING</fpml42:businessDayConvention>
+									<fpml42:businessCenters>
+										<fpml42:businessCenter>USNY</fpml42:businessCenter>
+										<fpml42:businessCenter>GBLO</fpml42:businessCenter>
+									</fpml42:businessCenters>
+								</fpml42:dateAdjustments>
+							</fpml42:terminationDate>
+							<fpml42:calculationPeriodDatesAdjustments>
+								<fpml42:businessDayConvention>MODFOLLOWING</fpml42:businessDayConvention>
+								<fpml42:businessCenters>
+									<fpml42:businessCenter>USNY</fpml42:businessCenter>
+									<fpml42:businessCenter>GBLO</fpml42:businessCenter>
+								</fpml42:businessCenters>
+							</fpml42:calculationPeriodDatesAdjustments>
+							<fpml42:calculationPeriodFrequency>
+								<fpml42:periodMultiplier>6</fpml42:periodMultiplier>
+								<fpml42:period>M</fpml42:period>
+								<fpml42:rollConvention>23</fpml42:rollConvention>
+							</fpml42:calculationPeriodFrequency>
+						</fpml42:calculationPeriodDates>
+						<fpml42:paymentDates id="fixedLegPaymentDates">
+							<fpml42:calculationPeriodDatesReference href="fixedLegCalcPeriodDates"/>
+							<fpml42:paymentFrequency>
+								<fpml42:periodMultiplier>6</fpml42:periodMultiplier>
+								<fpml42:period>M</fpml42:period>
+							</fpml42:paymentFrequency>
+							<fpml42:payRelativeTo>CalculationPeriodEndDate</fpml42:payRelativeTo>
+							<fpml42:paymentDatesAdjustments>
+								<fpml42:businessDayConvention>MODFOLLOWING</fpml42:businessDayConvention>
+								<fpml42:businessCenters>
+									<fpml42:businessCenter>USNY</fpml42:businessCenter>
+									<fpml42:businessCenter>GBLO</fpml42:businessCenter>
+								</fpml42:businessCenters>
+							</fpml42:paymentDatesAdjustments>
+						</fpml42:paymentDates>
+						<fpml42:calculationPeriodAmount>
+							<fpml42:calculation>
+								<fpml42:notionalSchedule id="fixedLegNotionalSchedule">
+									<fpml42:notionalStepSchedule>
+										<fpml42:initialValue>15000000</fpml42:initialValue>
+										<fpml42:currency>USD</fpml42:currency>
+									</fpml42:notionalStepSchedule>
+								</fpml42:notionalSchedule>
+								<fpml42:fixedRateSchedule>
+									<fpml42:initialValue>0.0003</fpml42:initialValue>
+								</fpml42:fixedRateSchedule>
+								<fpml42:dayCountFraction>30/360</fpml42:dayCountFraction>
+								<fpml42:compoundingMethod>None</fpml42:compoundingMethod>
+							</fpml42:calculation>
+						</fpml42:calculationPeriodAmount>
+					</fpml42:swapStream>
+					<fpml42:swapStream id="floatingLeg">
+						<fpml42:payerPartyReference href="partyA"/>
+						<fpml42:receiverPartyReference href="partyB"/>
+						<fpml42:calculationPeriodDates id="floatingLegCalcPeriodDates">
+							<fpml42:effectiveDate>
+								<fpml42:unadjustedDate>2017-01-23</fpml42:unadjustedDate>
+								<fpml42:dateAdjustments>
+									<fpml42:businessDayConvention>NONE</fpml42:businessDayConvention>
+								</fpml42:dateAdjustments>
+							</fpml42:effectiveDate>
+							<fpml42:terminationDate>
+								<fpml42:unadjustedDate>2022-01-23</fpml42:unadjustedDate>
+								<fpml42:dateAdjustments>
+									<fpml42:businessDayConvention>MODFOLLOWING</fpml42:businessDayConvention>
+									<fpml42:businessCenters>
+										<fpml42:businessCenter>USNY</fpml42:businessCenter>
+										<fpml42:businessCenter>GBLO</fpml42:businessCenter>
+									</fpml42:businessCenters>
+								</fpml42:dateAdjustments>
+							</fpml42:terminationDate>
+							<fpml42:calculationPeriodDatesAdjustments>
+								<fpml42:businessDayConvention>MODFOLLOWING</fpml42:businessDayConvention>
+								<fpml42:businessCenters>
+									<fpml42:businessCenter>USNY</fpml42:businessCenter>
+									<fpml42:businessCenter>GBLO</fpml42:businessCenter>
+								</fpml42:businessCenters>
+							</fpml42:calculationPeriodDatesAdjustments>
+							<fpml42:calculationPeriodFrequency>
+								<fpml42:periodMultiplier>3</fpml42:periodMultiplier>
+								<fpml42:period>M</fpml42:period>
+								<fpml42:rollConvention>23</fpml42:rollConvention>
+							</fpml42:calculationPeriodFrequency>
+						</fpml42:calculationPeriodDates>
+						<fpml42:paymentDates id="floatingLegPaymentDates">
+							<fpml42:calculationPeriodDatesReference href="floatingLegCalcPeriodDates"/>
+							<fpml42:paymentFrequency>
+								<fpml42:periodMultiplier>3</fpml42:periodMultiplier>
+								<fpml42:period>M</fpml42:period>
+							</fpml42:paymentFrequency>
+							<fpml42:payRelativeTo>CalculationPeriodEndDate</fpml42:payRelativeTo>
+							<fpml42:paymentDatesAdjustments>
+								<fpml42:businessDayConvention>MODFOLLOWING</fpml42:businessDayConvention>
+								<fpml42:businessCenters>
+									<fpml42:businessCenter>USNY</fpml42:businessCenter>
+									<fpml42:businessCenter>GBLO</fpml42:businessCenter>
+								</fpml42:businessCenters>
+							</fpml42:paymentDatesAdjustments>
+						</fpml42:paymentDates>
+						<fpml42:resetDates id="floatingLegResetDates">
+							<fpml42:calculationPeriodDatesReference href="floatingLegCalcPeriodDates"/>
+							<fpml42:resetRelativeTo>CalculationPeriodStartDate</fpml42:resetRelativeTo>
+							<fpml42:fixingDates>
+								<fpml42:periodMultiplier>-2</fpml42:periodMultiplier>
+								<fpml42:period>D</fpml42:period>
+								<fpml42:dayType>Business</fpml42:dayType>
+								<fpml42:businessDayConvention>PRECEDING</fpml42:businessDayConvention>
+								<fpml42:businessCenters>
+									<fpml42:businessCenter>GBLO</fpml42:businessCenter>
+								</fpml42:businessCenters>
+								<fpml42:dateRelativeTo href="floatingLegResetDates"/>
+							</fpml42:fixingDates>
+							<fpml42:resetFrequency>
+								<fpml42:periodMultiplier>3</fpml42:periodMultiplier>
+								<fpml42:period>M</fpml42:period>
+							</fpml42:resetFrequency>
+							<fpml42:resetDatesAdjustments>
+								<fpml42:businessDayConvention>MODFOLLOWING</fpml42:businessDayConvention>
+								<fpml42:businessCenters>
+									<fpml42:businessCenter>GBLO</fpml42:businessCenter>
+								</fpml42:businessCenters>
+							</fpml42:resetDatesAdjustments>
+						</fpml42:resetDates>
+						<fpml42:calculationPeriodAmount>
+							<fpml42:calculation>
+								<fpml42:notionalSchedule id="floatingLegNotionalSchedule">
+									<fpml42:notionalStepSchedule>
+										<fpml42:initialValue>15000000</fpml42:initialValue>
+										<fpml42:currency>USD</fpml42:currency>
+									</fpml42:notionalStepSchedule>
+								</fpml42:notionalSchedule>
+								<fpml42:floatingRateCalculation>
+									<fpml42:floatingRateIndex>USD-LIBOR-BBA</fpml42:floatingRateIndex>
+									<fpml42:indexTenor>
+										<fpml42:periodMultiplier>3</fpml42:periodMultiplier>
+										<fpml42:period>M</fpml42:period>
+									</fpml42:indexTenor>
+								</fpml42:floatingRateCalculation>
+								<fpml42:dayCountFraction>ACT/360</fpml42:dayCountFraction>
+								<fpml42:compoundingMethod>None</fpml42:compoundingMethod>
+							</fpml42:calculation>
+						</fpml42:calculationPeriodAmount>
+					</fpml42:swapStream>
+				</fpml42:swap>
+			</fpml42:trade>
+			<fpml42:party xmlns:fpml42="http://www.fpml.org/2005/FpML-4-2" id="partyA">
+				<fpml42:partyId partyIdScheme="urn:x-schemas-db-com:summit/book">EURO_SWAPS</fpml42:partyId>
+				<fpml42:partyName>DB</fpml42:partyName>
+			</fpml42:party>
+			<fpml42:party xmlns:fpml42="http://www.fpml.org/2005/FpML-4-2" id="partyB">
+				<fpml42:partyId partyIdScheme="http://www.fpml.org/ext/iso9362">RERNATALBWBH</fpml42:partyId>
+				<fpml42:partyName>Dr. rer. nat. Albrecht Bähring</fpml42:partyName>
+			</fpml42:party>
+		</tpml1_2:FpML>
+		<tpml1_2:dbExtentions>
+			<tpml1_2:propertyTable>
+				<tpml1_2:property>
+					<tpml1_2:propertyName>productId</tpml1_2:propertyName>
+					<tpml1_2:propertyValue>10002</tpml1_2:propertyValue>
+				</tpml1_2:property>
+				<tpml1_2:property>
+					<tpml1_2:propertyName>productType</tpml1_2:propertyName>
+					<tpml1_2:propertyValue>IRSwapFixFlt</tpml1_2:propertyValue>
+				</tpml1_2:property>
+				<tpml1_2:property>
+					<tpml1_2:propertyName>assignedBy</tpml1_2:propertyName>
+					<tpml1_2:propertyValue>ITRAC</tpml1_2:propertyValue>
+				</tpml1_2:property>
+				<tpml1_2:property>
+					<tpml1_2:propertyName>assignedDate</tpml1_2:propertyName>
+					<tpml1_2:propertyValue>2017-01-19T13:04:54+00:00</tpml1_2:propertyValue>
+				</tpml1_2:property>
+				<tpml1_2:property>
+					<tpml1_2:propertyName>CollateralizedCashPrice</tpml1_2:propertyName>
+					<tpml1_2:propertyValue>false</tpml1_2:propertyValue>
+				</tpml1_2:property>
+				<tpml1_2:property>
+					<tpml1_2:propertyName>clearingStatus</tpml1_2:propertyName>
+					<tpml1_2:propertyValue/>
+				</tpml1_2:property>
+				<tpml1_2:property>
+					<tpml1_2:propertyName>clearingHouse</tpml1_2:propertyName>
+					<tpml1_2:propertyValue/>
+				</tpml1_2:property>
+				<tpml1_2:property>
+					<tpml1_2:propertyName>clearingModel</tpml1_2:propertyName>
+					<tpml1_2:propertyValue/>
+				</tpml1_2:property>
+				<tpml1_2:property>
+					<tpml1_2:propertyName>Summit STV Comment</tpml1_2:propertyName>
+					<tpml1_2:propertyValue>SIT1</tpml1_2:propertyValue>
+				</tpml1_2:property>
+			</tpml1_2:propertyTable>
+			<tpml1_2:trader>
+				<tpml1_2:partyId>partyA</tpml1_2:partyId>
+				<tpml1_2:userId>TEST</tpml1_2:userId>
+				<tpml1_2:userName>qa_trader1</tpml1_2:userName>
+			</tpml1_2:trader>
+		</tpml1_2:dbExtentions>
+		<tpml1_2:clientPayload>
+			<reporting:reporting xmlns:reporting="urn:x-schemas-db-com:tpmbase/reporting/reporting_1_0">
+				<reporting:reportingRegimeInformation>
+					<reporting:withinJurisdiction>CFTC</reporting:withinJurisdiction>
+					<reporting:mandatoryClearing>
+						<reporting:mandatoryClearingIndicator>false</reporting:mandatoryClearingIndicator>
+						<reporting:counterpartyEndUserExemption>false</reporting:counterpartyEndUserExemption>
+						<reporting:manualOverride>false</reporting:manualOverride>
+						<reporting:checked>true</reporting:checked>
+					</reporting:mandatoryClearing>
+				</reporting:reportingRegimeInformation>
+				<reporting:reportingRegimeInformation>
+					<reporting:withinJurisdiction>ESMA</reporting:withinJurisdiction>
+					<reporting:mandatoryClearing>
+						<reporting:mandatoryClearingIndicator>false</reporting:mandatoryClearingIndicator>
+						<reporting:counterpartyEndUserExemption>false</reporting:counterpartyEndUserExemption>
+						<reporting:manualOverride>false</reporting:manualOverride>
+						<reporting:checked>true</reporting:checked>
+					</reporting:mandatoryClearing>
+				</reporting:reportingRegimeInformation>
+				<reporting:reportingRegimeInformation>
+					<reporting:withinJurisdiction>ASIC</reporting:withinJurisdiction>
+					<reporting:mandatoryClearing>
+						<reporting:mandatoryClearingIndicator>false</reporting:mandatoryClearingIndicator>
+						<reporting:counterpartyEndUserExemption>false</reporting:counterpartyEndUserExemption>
+						<reporting:manualOverride>false</reporting:manualOverride>
+						<reporting:checked>true</reporting:checked>
+					</reporting:mandatoryClearing>
+				</reporting:reportingRegimeInformation>
+				<reporting:executionDateTime>2017-01-19T13:37:52+00:00</reporting:executionDateTime>
+			</reporting:reporting>
+		</tpml1_2:clientPayload>
+	</tpml1_2:body>
+</tpml1_2:TPML>
