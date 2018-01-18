@@ -11,9 +11,6 @@ public class Main {
         Unlocker ul = new Unlocker();
         ul.setName("frmUnlocker");
 
-        ul.setVisible(true);
-        ul.repaint();
-//        new Thread();
         System.out.println(ul);
     }
 }
