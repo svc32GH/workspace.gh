@@ -14,10 +14,14 @@ public class Unlocker extends JFrame {
 //    private static final int x = 1370;
 //    private static final int y = 15;
 
-    //    1-st Monitor, right-midle:
-    private static final int x = 680;
-    private static final int y = 670;
+    //    Single Home Monitor, right-midle:
+    private static final int x = 1174;
+    private static final int y = 133;
 
+//    //    1-st Monitor, right-midle:
+//    private static final int x = 680;
+//    private static final int y = 670;
+//
     //    2-nd Monitor:
 //    private static final int x = 2575;
 //    private static final int y = 675;
@@ -25,8 +29,9 @@ public class Unlocker extends JFrame {
     private static final int width = 500;
     private static final int height = 500;
 
-    public JFrame thisFrame;
-    public JList listBox;
+    private JFrame thisFrame;
+    private JList listBox;
+    private UnlockLogWriter ulw;
 
     public Unlocker() {
         super("Unlock Monitor");
@@ -41,6 +46,7 @@ public class Unlocker extends JFrame {
                                       Rectangle btnBounds = thisFrame.getBounds();
                                       System.out.println( "Frame:   x = " + btnBounds.x + ", y = " + btnBounds.y + ", w = " + thisFrame.getWidth() + ",h = " + thisFrame.getHeight() );
                                       System.out.println( "ListBox:                   w = " + listBox.getWidth() + ",h = " + listBox.getHeight() );
+                                      ulw.stopRunning();
                                   }
                               }
         );
@@ -48,14 +54,23 @@ public class Unlocker extends JFrame {
         JPanel pnlMain = new JPanel(new BorderLayout());
         pnlMain.setBackground(new Color(163, 220, 166));
 
+        JPanel pnlMainLeft = new JPanel();
+        JPanel pnlMainRight = new JPanel();
+        JPanel pnlMainTop = new JPanel();
+        JPanel pnlMainBot = new JPanel();
+        pnlMainLeft.setOpaque(false);
+        pnlMainRight.setOpaque(false);
+        pnlMainTop.setOpaque(false);
+        pnlMainBot.setOpaque(false);
+
         JPanel pnlTop = new JPanel();
         pnlTop.setPreferredSize(new Dimension(30, 50));
         pnlTop.setBackground(new Color(68, 168, 185));
 
-        JPanel pnlBot = new JPanel(new BorderLayout());
+        JPanel pnlBot = new JPanel();
         pnlBot.setPreferredSize(new Dimension(30, 50));
         pnlBot.setBackground(new Color(138, 100, 94));
-        pnlBot.add(btn, BorderLayout.CENTER);
+        pnlBot.add(btn);
 
         final DefaultListModel listModel = new DefaultListModel();
         JList list = new JList(listModel);
@@ -64,6 +79,12 @@ public class Unlocker extends JFrame {
         for (int i = 0; i < 25; i++) {
             listModel.addElement("Элемент списка " + i);
         }
+
+        pnlMain.add(pnlMainLeft, BorderLayout.WEST);
+        pnlMain.add(pnlMainRight, BorderLayout.EAST);
+        pnlMain.add(pnlMainTop, BorderLayout.NORTH);
+        pnlMain.add(pnlMainBot, BorderLayout.SOUTH);
+
         pnlMain.add(new JScrollPane(list), BorderLayout.CENTER);
 
 
@@ -78,6 +99,9 @@ public class Unlocker extends JFrame {
         setVisible(true);
 
         //        this.getBounds()
+
+        this.ulw = new UnlockLogWriter();
+        ulw.run();
     }
 
 }
