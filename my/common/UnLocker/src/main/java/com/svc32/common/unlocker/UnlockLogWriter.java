@@ -1,12 +1,17 @@
 package com.svc32.common.unlocker;
 
+import com.svc32.common.svc32Utils.file.FileFunctions;
+
+import java.io.File;
 import java.util.Date;
 //import com.svc32.common.svc32Utils;
 
 public class UnlockLogWriter implements Runnable {
     private boolean continueRun;
+    private File logFile;
 
-    public void UnlockLogWriter() {
+    public UnlockLogWriter(File logFile) {
+        this.logFile = logFile;
         this.continueRun = true;
     }
 
@@ -18,7 +23,9 @@ public class UnlockLogWriter implements Runnable {
         try {
             while (continueRun) {
                 Thread.sleep(1000);
-                System.out.println(new Date());
+                Date date = new Date();
+                writeLog(date.toString());
+//                System.out.println(date);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -26,8 +33,8 @@ public class UnlockLogWriter implements Runnable {
 
     }
 
-    private void writeLog() {
-//        com.svc32.common.svc32Utils.file.FileFunctions ff = new com.svc32.common.svc32Utils.fileFileFunctions();
+    private void writeLog(String line) {
+        FileFunctions.writeFile(logFile, line);
     }
 
 }

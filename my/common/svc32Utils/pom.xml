@@ -32,13 +32,14 @@
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.0.2</version>
-                <!--<configuration>-->
+                <configuration>
                     <!--<goal>jar:inplace</goal>-->
+                    <goal>jar:jar</goal>
                     <!--<archive>-->
                         <!--<manifestFile>META-INF/MANIFEST.MF</manifestFile>-->
                     <!--</archive>-->
                     <!--<outputDirectory>artifacts</outputDirectory>-->
-                <!--</configuration>-->
+                </configuration>
             </plugin>
         </plugins>
     </build>

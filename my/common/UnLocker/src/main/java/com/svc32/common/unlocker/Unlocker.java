@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class Unlocker extends JFrame {
     //    3-rd Monitor:
@@ -32,9 +33,20 @@ public class Unlocker extends JFrame {
     private JFrame thisFrame;
     private JList listBox;
     private UnlockLogWriter ulw;
+    private Thread ulwThread;
+    private File logFile;
 
-    public Unlocker() {
-        super("Unlock Monitor");
+    public Unlocker(String logFilePath) {
+        constructor(new File(logFilePath));
+    }
+
+    public Unlocker(File logFile) {
+        constructor(logFile);
+    }
+
+    private void constructor(File logFile) {
+        this.logFile = logFile;
+        this.setTitle("Unlock Monitor");
         this.setBounds(x, y, width, height);
         this.setPreferredSize(new Dimension(width, height));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -100,8 +112,10 @@ public class Unlocker extends JFrame {
 
         //        this.getBounds()
 
-        this.ulw = new UnlockLogWriter();
-        ulw.run();
+        this.ulw = new UnlockLogWriter(this.logFile);
+        ulwThread = new Thread(ulw);
+        ulwThread.start();
+
     }
 
 }
