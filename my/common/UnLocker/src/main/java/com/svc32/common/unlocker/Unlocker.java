@@ -59,6 +59,7 @@ public class Unlocker extends JFrame {
                                       System.out.println( "Frame:   x = " + btnBounds.x + ", y = " + btnBounds.y + ", w = " + thisFrame.getWidth() + ",h = " + thisFrame.getHeight() );
                                       System.out.println( "ListBox:                   w = " + listBox.getWidth() + ",h = " + listBox.getHeight() );
                                       ulw.stopRunning();
+                                      ulwThread.interrupt();
                                   }
                               }
         );

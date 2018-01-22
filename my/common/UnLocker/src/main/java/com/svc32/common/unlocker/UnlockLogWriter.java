@@ -28,7 +28,9 @@ public class UnlockLogWriter implements Runnable {
 //                System.out.println(date);
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+           Thread.currentThread().interrupt();
+        } finally {
+            
         }
 
     }
