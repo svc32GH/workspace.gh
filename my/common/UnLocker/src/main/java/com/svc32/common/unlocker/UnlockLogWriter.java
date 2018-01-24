@@ -30,7 +30,7 @@ public class UnlockLogWriter implements Runnable {
         } catch (InterruptedException e) {
            Thread.currentThread().interrupt();
         } finally {
-            
+
         }
 
     }
