@@ -10,7 +10,7 @@ public class HelloWebServiceImpl implements HelloWebService {
 
     @Override
     public String getHelloString(String name) {
-        return name;
+        return "Hello, " + name + "!";
     }
 
 }

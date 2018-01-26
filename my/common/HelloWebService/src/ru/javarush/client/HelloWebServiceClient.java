@@ -18,7 +18,7 @@ public class HelloWebServiceClient {
 
     public static void main(String[] args) throws MalformedURLException {
         // создаем ссылку на wsdl описание
-        URL url = new URL("http://localhost:1986/wss/hello?wsdl");
+        URL url = new URL("http://localhost:1986/svc32/hello?wsdl");
         System.out.println("\n" + "url = \n" + url + "\n");
 
         // Параметры следующего конструктора смотрим в самом первом теге WSDL описания - definitions

@@ -11,7 +11,7 @@ public class HelloWebServicePublisher {
         // запускаем веб-сервер на порту 1986
         // и по адресу, указанному в первом аргументе,
         // запускаем веб-сервис, передаваемый во втором аргументе
-        Endpoint.publish("http://localhost:1986/wss/hello", new HelloWebServiceImpl());
+        Endpoint.publish("http://localhost:1986/svc32/hello", new HelloWebServiceImpl());
         System.out.println("***");
     }
 }
