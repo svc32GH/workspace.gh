@@ -1,5 +1,11 @@
 package com.svc32.common.svc32Utils.string;
 
+//import com.sun.deploy.util.StringUtils;
+
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Collection;
+
 public class StringFunctions {
 	
 	public static String repeatStr(String str, int repeatNumb) {
@@ -31,4 +37,10 @@ public class StringFunctions {
 		String separator = " ";
 		return intArrayToString(intArray, separator);
 	}
+
+	public static String getSeparatedList(Collection<String> list, String separator) {
+		String res = StringUtils.join(list, separator);
+		return res;
+	}
+
 }
