@@ -1,15 +1,11 @@
 package com.svc32.common.svc32Utils.file;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
+import java.util.Properties;
 
 public class FileFunctions {
 	
@@ -42,7 +38,7 @@ public class FileFunctions {
 		return fileRows;
 	}
 	
-	public static void writeFile(File file, String text) {
+	public static void writeFile(File file, String line) {
 	 
 	    try {
 	        if(!file.exists()){
@@ -51,7 +47,7 @@ public class FileFunctions {
 	 
 	        PrintWriter out = new PrintWriter(file.getAbsoluteFile());
 	        try {
-	            out.print(text);
+	            out.print(line);
 	        } finally {
 	            out.close();
 	        }
@@ -60,4 +56,80 @@ public class FileFunctions {
 	    }
 	}
 
+	// Write String to the end of File
+	public static void writeToFile(File file, String line) {
+		FileWriter fWriter = null;
+
+		try {
+			fWriter = new FileWriter(file, true);
+			fWriter.write(line + "\n");
+			fWriter.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public static Properties readProperties(String propertyPath, String charsetName) {
+		File propertyFile = new File(propertyPath);
+		return readProperties(propertyFile, charsetName);
+	}
+
+	public static Properties readProperties(File propertyFile, String charsetName) {
+		Properties properties = new Properties();
+		InputStream is = null;
+
+		try {
+			InputStream inputStream = is = new FileInputStream(propertyFile);
+			properties.load(new InputStreamReader(is, charsetName));
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return properties;
+	}
+
+	public static void writeProperties(Properties properties, String propertyPath) {
+		File propertyFile = new File(propertyPath);
+		writeProperties(properties, propertyFile);
+	}
+
+		public static void writeProperties(Properties properties, File propertyFile) {
+		FileOutputStream out = null;
+		try {
+			out = new FileOutputStream(propertyFile);
+			properties.store(out, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (out != null) {
+				try {
+					out.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public static String escapeUnicode(String input) {
+		StringBuilder b = new StringBuilder(input.length());
+		Formatter f = new Formatter(b);
+		for (char c : input.toCharArray()) {
+			if (c < 128) {
+				b.append(c);
+			} else {
+				f.format("\\u%04x", (int) c);
+			}
+		}
+		return b.toString();
+	}
 }

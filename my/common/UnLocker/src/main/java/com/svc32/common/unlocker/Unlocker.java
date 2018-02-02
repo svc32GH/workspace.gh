@@ -37,14 +37,22 @@ public class Unlocker extends JFrame {
     private File logFile;
 
     public Unlocker(String logFilePath) {
-        constructor(new File(logFilePath));
+        constructFrame(new File(logFilePath));
+        startUnlocker();
     }
 
     public Unlocker(File logFile) {
-        constructor(logFile);
+        constructFrame(logFile);
+        startUnlocker();
     }
 
-    private void constructor(File logFile) {
+    public void startUnlocker() {
+        this.ulw = new UnlockLogWriter(this.logFile);
+        ulwThread = new Thread(ulw);
+        ulwThread.start();
+    }
+
+    private void constructFrame(File logFile) {
         this.logFile = logFile;
         this.setTitle("Unlock Monitor");
         this.setBounds(x, y, width, height);
@@ -90,7 +98,7 @@ public class Unlocker extends JFrame {
         listBox = list;
 
         for (int i = 0; i < 25; i++) {
-            listModel.addElement("Элемент списка " + i);
+            listModel.addElement("Item element " + i);
         }
 
         pnlMain.add(pnlMainLeft, BorderLayout.WEST);
@@ -112,14 +120,6 @@ public class Unlocker extends JFrame {
         setVisible(true);
 
         //        this.getBounds()
-
-        this.ulw = new UnlockLogWriter(this.logFile);
-        ulwThread = new Thread(ulw);
-        ulwThread.start();
-
-    }
-
-    public void tmp() {
 
     }
 
