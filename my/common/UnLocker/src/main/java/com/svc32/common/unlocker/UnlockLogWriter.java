@@ -11,7 +11,7 @@ public class UnlockLogWriter implements Runnable {
 
     private boolean continueRun;
     private File logFile;
-    private Date startTimeStamp = new Date();
+    private long startTimeStamp;
 
     public UnlockLogWriter(File logFile) {
         this.logFile = logFile;
@@ -23,15 +23,17 @@ public class UnlockLogWriter implements Runnable {
     }
 
     public void run() {
-        int startT, currentT = 0;
-        writeLog("UnLocker started on " + DateTimeSecZ(startTimeStamp));
+        startTimeStamp = System.currentTimeMillis();
+        long currentInterval;
+        writeLog("UnLocker started on " + DateTimeSecZ(new Date()));
 
         try {
             while (continueRun) {
                 Thread.sleep(delayInt);
-                currentT += delayInt;
+                currentInterval = System.currentTimeMillis() - startTimeStamp;
 
-                writeLog("Elapsed time = " + currentT);
+                String line = GetUTCdate(currentInterval);
+                writeLog("Elapsed time: " + line);
 //                System.out.println(date);
             }
         } catch (InterruptedException e) {

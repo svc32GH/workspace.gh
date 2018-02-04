@@ -2,13 +2,18 @@ package com.svc32.common.svc32Utils.file;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FileFunctions {
-	
+
+	public static final String defaultLogFileName = "WorkLog.txt";
+	public static final String separator = System.getProperty("file.separator");
 	private static BufferedReader reader;
 
 	public static List<String> readFileRows(File file, Charset cs) throws IOException {
@@ -61,6 +66,8 @@ public class FileFunctions {
 		FileWriter fWriter = null;
 
 		try {
+			if(!file.exists())
+				file.createNewFile();
 			fWriter = new FileWriter(file, true);
 			fWriter.write(line + "\n");
 			fWriter.flush();
@@ -132,4 +139,78 @@ public class FileFunctions {
 		}
 		return b.toString();
 	}
+
+	public static File getLogFile(String logFilePath) {
+
+		if (logFilePath == null)
+			return getDefaultLogFile();
+		else if (logFilePath.length() == 0)
+			return getDefaultLogFile();
+		else if (!isFileNameCorrect(logFilePath))
+			return getDefaultLogFile();
+		else {
+			File logFile = new File(logFilePath);
+			try {
+				if (hasExtension(logFile)) {
+					File parentDir = logFile.getParentFile();
+					parentDir.mkdirs();
+					logFile.createNewFile();
+					return logFile;
+				} else {
+					logFile.mkdirs();
+					File logFIleDefaultName = new File(logFile.getAbsolutePath()
+							+ separator
+							+ defaultLogFileName);
+					logFIleDefaultName.createNewFile();
+					return logFIleDefaultName;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return null;
+	}
+
+	private static File getDefaultLogFile() {
+		File file = new File(System.getProperty("user.home")
+				+ separator
+				+ "WorkLog.txt");
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return file;
+	}
+
+	public static boolean hasExtension(File file) {
+		return file.getName().contains(".");
+	}
+
+	public static boolean isFileNameCorrect(String name){
+		Pattern pattern = Pattern.compile("([a-zA-Z]\\:)?(\\\\[a-zA-Z\\d\\.!#$%&()+,\\-=@\\[\\]^`{}~]+)+");
+		Matcher matcher = pattern.matcher(name);
+		boolean res = matcher.matches();
+		return res;
+	}
+
+	//	public static final Pattern patt = Pattern.compile("([a-zA-Z]\\:)?(\\\\[a-zA-Z\\d]+)+");
+	protected static final Pattern patt = Pattern.compile("([a-zA-Z]\\:)?(\\\\[a-zA-Z\\d\\.!#$%&()+,\\-=@\\[\\]^`{}~]+)+");
+	protected static final String correctPath  = "D:";
+	protected static final String correctPath1 = "\\111\\222\\3:33.log";
+	protected static final String correctPath2 = correctPath + correctPath1;
+
+	protected static boolean isFileNameCorrectFind(String name){
+		Matcher matcher = patt.matcher(name);
+		boolean res = matcher.find();
+		return res;
+	}
+
+	protected static boolean isFileNameCorrectMatches(String name){
+		Matcher matcher = patt.matcher(name);
+		boolean res = matcher.matches();
+		return res;
+	}
+
 }

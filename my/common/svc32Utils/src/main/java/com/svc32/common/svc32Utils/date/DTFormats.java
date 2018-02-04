@@ -1,17 +1,33 @@
 package com.svc32.common.svc32Utils.date;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 public class DTFormats {
+    static final String unlockerHmFormat = "HH'H' mm'min'";
+    static final String baseHmFormat = "HH:mm";
+    static final String baseHmsFormat = "HH:mm:ss";
+    static final String instantFormat = "yyyy-MM-DD'T'HH:mm:ss";
+    static final SimpleDateFormat unlockerHmSdf = new SimpleDateFormat(unlockerHmFormat);
+    static final SimpleDateFormat baseHmSdf = new SimpleDateFormat(baseHmFormat);
+    static final SimpleDateFormat baseHmsSdf = new SimpleDateFormat(baseHmsFormat);
+    static final SimpleDateFormat instantSdf = new SimpleDateFormat(instantFormat);
 
-    public static String DateTimeSecZ (Date date) {
+//    static {
+//        baseHmsSdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+//        instantSdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+//    }
+
+    public static String DateTimeSecZ(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.DD 'at' HH:mm:ss z");
         return sdf.format(date);
     }
 
-    public static String HourMinSec (long milisecs) {
+    public static String HourMinSec(long milisecs) {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         return sdf.format(milisecs);
     }
@@ -23,22 +39,42 @@ public class DTFormats {
         long mins = (secs / 60) % 60;
 
         secs = secs % 60;
-        return hours + "  " + mins + "  " + secs +"  ";
+        return hours + "  " + mins + "  " + secs + "  ";
     }
 
-    // Possible date formats: "yyyy.MM.DD 'at' HH:mm:ss z"
-    // .....................   "HH:mm:ss"
-    // .....................   "mm:ss"
-    // .....................   "ss"
-    // ... and any others
-    //
-    // This is intended for correct transformation some period of dates by certain format
-    public static Date GetUTCdate(long dateInterval, String dateFormat) {
-        final SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-        final String utcDate = sdf.format(new Date(dateInterval));
+    // timeInterval - in seconds
+    public static String GetUTCdate(long timeInterval) {
+        long nDays = TimeUnit.SECONDS.toDays(timeInterval);
 
-        return null;
+        Instant date = Instant.ofEpochSecond(timeInterval);
+        Date iDate = null;
+        try {
+            iDate = instantSdf.parse(date.toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String iDateStr = unlockerHmSdf.format(iDate);
+        return (getNumberOfDays(nDays) + " " + iDateStr).replace(" 0", "  ");
+    }
+
+    public static String getNumberOfDays(long nDays) {
+        String res;
+        String nDaysStr = String.valueOf(nDays);
+        if (nDays == 0)
+            res = "      ";
+        else
+            switch ( nDaysStr.length() ) {
+                case 1:  res = "    " + nDaysStr + "D";
+                break;
+                case 2:  res = "   " + nDaysStr + "D";
+                break;
+                case 3:  res = "  " + nDaysStr + "D";
+                break;
+                case 4:  res = " " + nDaysStr + "D";
+                break;
+                default: res = " >27 Years!! +";
+            }
+        return res;
     }
 
 }
