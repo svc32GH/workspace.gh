@@ -1,7 +1,10 @@
 package com.svc32.common.unlocker;
 
 
+import java.io.File;
 import java.util.Arrays;
+
+import static com.svc32.common.svc32Utils.file.FileFunctions.*;
 
 public class Main {
 //    private final static String path = "C:\\ws.git\\my\\common\\UnLocker\\WorkLog.log";
@@ -21,7 +24,8 @@ public class Main {
     }
 
     private void run(String logFilePath) {
-        Unlocker ul = new Unlocker(path);
+        File currentLogPath = getLogFile(logFilePath);
+        Unlocker ul = new Unlocker(currentLogPath);
         ul.setName("frmUnlocker");
 
         System.out.println(ul);

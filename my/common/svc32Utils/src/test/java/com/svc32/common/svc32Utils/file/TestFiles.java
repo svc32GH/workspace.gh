@@ -16,6 +16,7 @@ public class TestFiles {
     private static final String incorrectPath = "D:\\1\\2\\3:3\\4.txt";
     private static final String noExtensionPath = "D:\\11\\22\\33";
     private static final String correctPath = "D:\\111\\222\\333.log";
+    private static final String correctPath2 = "D:\\ws.gh\\my\\common\\UnLocker";
 
     @Test
     public void test_getLogFile() throws IOException {
@@ -24,6 +25,7 @@ public class TestFiles {
         System.out.println("incorrectPath:   " + getLogFile(incorrectPath).getAbsolutePath());
         System.out.println("noExtensionPath: " + getLogFile(noExtensionPath).getAbsolutePath());
         System.out.println("correctPath:     " + getLogFile(correctPath).getAbsolutePath());
+        System.out.println("correctPath2:    " + getLogFile(correctPath2).getAbsolutePath());
 
     }
 
