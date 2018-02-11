@@ -14,24 +14,59 @@ public class FileFunctions {
 
 	public static final String defaultLogFileName = "WorkLog.txt";
 	public static final String separator = System.getProperty("file.separator");
-	private static BufferedReader reader;
+
+	private File file;
+	private String charsetName;
+	private BufferedReader bReader;
+
+	public FileFunctions(File file, String csName) throws IOException {
+        _FileFunctions(file, csName);
+	}
+
+	public FileFunctions(File file) throws IOException {
+        _FileFunctions(file, Charset.defaultCharset().name());
+	}
+
+	private void _FileFunctions(File file, String csName) throws IOException {
+	    if (!file.exists()) {
+	        File parent = file.getParentFile();
+	        parent.mkdirs();
+            file.createNewFile();
+        }
+        this.file = file;
+        this.charsetName = csName;
+        FileInputStream fis = new FileInputStream(this.file);
+        this.bReader = new BufferedReader(new InputStreamReader(fis, this.charsetName));
+   }
+
+	public String readFileLine() throws IOException {
+		String line = bReader.readLine();
+		return line;
+	}
+
+	public void reopenReader() throws IOException {
+		bReader.close();
+		FileInputStream fis = new FileInputStream(this.file);
+		this.bReader = new BufferedReader(new InputStreamReader(fis, this.charsetName));
+	}
 
 	public static List<String> readFileRows(File file, Charset cs) throws IOException {
-	    if (!file.exists()){
-	        throw new FileNotFoundException(file.getName());
-	    }
-	    
+		if (!file.exists()){
+			throw new FileNotFoundException(file.getName());
+		}
+
+		FileInputStream in = null;
+		BufferedReader reader = null;
 	    ArrayList<String> fileRows = new ArrayList<String>();
 	    try {
 	    	try {
-	    		FileInputStream in = new FileInputStream(file);
+	    		in = new FileInputStream(file);
 	    		reader = new BufferedReader(new InputStreamReader(in, cs));
 	    		String line = null;
-	    		String newline = System.getProperty("line.separator");
-	    		
+
 	    		while ((line = reader.readLine()) != null) {
 	    			fileRows.add(line);
-	    			fileRows.add(newline);
+	    			fileRows.add(separator);
 	    		}
 	    	} finally {
 	    		reader.close();
@@ -42,7 +77,7 @@ public class FileFunctions {
 	    }
 		return fileRows;
 	}
-	
+
 	public static void writeFile(File file, String line) {
 		PrintWriter out = null;
 
@@ -75,6 +110,75 @@ public class FileFunctions {
 		}
 
 	}
+
+	public static String rewriteLastLine(File file, String _line) {
+        String line = null;
+        try{
+            RandomAccessFile raf = new RandomAccessFile(file,"rw");
+
+            long currentLineStart = file.length();
+            long currentLineEnd = file.length();
+            long currentPos = currentLineEnd;
+            long lastPosInFile = currentLineStart - 1;
+            long filePointer = currentLineStart - 1;
+            while ( true) {
+                filePointer--;
+
+                // we are at start of file so this is the first line in the file.
+                if (filePointer < 0) {
+                    break;
+                }
+
+                raf.seek(filePointer);
+                int readByte = raf.readByte();
+
+                // We ignore last LF in file. search back to find the previous LF.
+                if (readByte == 0xA && filePointer != lastPosInFile ) {
+                    break;
+                }
+            }
+            // we want to start at pointer +1 so we are after the LF we found or at 0 the start of the file.
+            currentLineStart = filePointer + 1;
+            currentPos = currentLineStart;
+            if (filePointer >= 0)
+            line = raf.readLine();
+            raf.seek(currentLineStart);
+            raf.writeBytes(_line);
+//            raf.writeBytes(separator);
+//            raf.setLength(raf.getFilePointer()); // TRUNCATE
+            raf.close();
+
+//            long length = raf.length();
+//            String line=null;
+//            boolean find=false;
+//
+//            for(long rPos=0L, wPos=0L; rPos<length; raf.seek(rPos)){
+//
+//                // READ
+//                String str="max_files_per_process";
+//                line = raf.readLine();
+//                if(line.startsWith(str)){
+//                    find=true;
+//                }
+//
+//                rPos = raf.getFilePointer();
+//                if (find){
+//                    line = line.replace("17","30");
+//                    find=false;
+//                }
+//                raf.seek(wPos);
+//                raf.writeBytes(line + separator);
+//                wPos = raf.getFilePointer();
+//            }
+//            raf.setLength(raf.getFilePointer()); // TRUNCATE
+//            raf.close(); // duh...
+
+        }catch(IOException x){
+            System.err.println("wrong");
+        }
+        return line;
+    }
+
 
 	public static Properties readProperties(String propertyPath, String charsetName) {
 		File propertyFile = new File(propertyPath);

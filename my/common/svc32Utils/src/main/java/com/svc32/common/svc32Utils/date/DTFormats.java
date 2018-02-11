@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
-import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class DTFormats {
@@ -12,26 +11,34 @@ public class DTFormats {
     static final String unlockerHmsFormat = "HH'H' mm'min' ss'sec'";
     static final String baseHmFormat = "HH:mm";
     static final String baseHmsFormat = "HH:mm:ss";
-    static final String instantFormat = "yyyy-MM-DD'T'HH:mm:ss";
+    static final String instantFormat = "yyyy-MM-dd'T'HH:mm:ss";
+
     static final SimpleDateFormat unlockerHmSdf = new SimpleDateFormat(unlockerHmFormat);
     static final SimpleDateFormat unlockerHmsSdf = new SimpleDateFormat(unlockerHmsFormat);
     static final SimpleDateFormat baseHmSdf = new SimpleDateFormat(baseHmFormat);
     static final SimpleDateFormat baseHmsSdf = new SimpleDateFormat(baseHmsFormat);
     static final SimpleDateFormat instantSdf = new SimpleDateFormat(instantFormat);
 
+    static final String logDTZformat = "yyyy.MM.dd 'at' HH:mm:ss z";
+    static final String logDformat = "yyyy.MM.dd";
+    static final SimpleDateFormat logDTZsdf = new SimpleDateFormat(logDTZformat);
+    static final SimpleDateFormat logDsdf = new SimpleDateFormat(logDformat);
+
 //    static {
 //        baseHmsSdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 //        instantSdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 //    }
 
-    public static String DateTimeSecZ(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.DD 'at' HH:mm:ss z");
-        return sdf.format(date);
+    public static String getDateOnly(Date date) {
+        return logDsdf.format(date);
     }
 
-    public static String HourMinSec(long milisecs) {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        return sdf.format(milisecs);
+    public static String getDateTimeSecZ(Date date) {
+        return logDTZsdf.format(date);
+    }
+
+    public static String getHourMinSec(long milisecs) {
+        return baseHmsSdf.format(milisecs);
     }
 
 

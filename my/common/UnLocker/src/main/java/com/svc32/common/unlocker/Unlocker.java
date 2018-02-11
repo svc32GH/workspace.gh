@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 public class Unlocker extends JFrame {
     //    3-rd Monitor:
@@ -40,17 +41,17 @@ public class Unlocker extends JFrame {
     private Thread ulwThread;
     private File logFile;
 
-    public Unlocker(String logFilePath) {
+    public Unlocker(String logFilePath) throws IOException {
         constructFrame(new File(logFilePath));
         startUnlocker();
     }
 
-    public Unlocker(File logFile) {
+    public Unlocker(File logFile) throws IOException {
         constructFrame(logFile);
         startUnlocker();
     }
 
-    private void startUnlocker() {
+    private void startUnlocker() throws IOException {
         ulw = new UnlockLogWriter(this.logFile);
         ulwThread = new Thread(ulw);
         ulwThread.start();
