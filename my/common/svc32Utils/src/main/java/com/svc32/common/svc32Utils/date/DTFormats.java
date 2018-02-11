@@ -9,10 +9,12 @@ import java.util.concurrent.TimeUnit;
 
 public class DTFormats {
     static final String unlockerHmFormat = "HH'H' mm'min'";
+    static final String unlockerHmsFormat = "HH'H' mm'min' ss'sec'";
     static final String baseHmFormat = "HH:mm";
     static final String baseHmsFormat = "HH:mm:ss";
     static final String instantFormat = "yyyy-MM-DD'T'HH:mm:ss";
     static final SimpleDateFormat unlockerHmSdf = new SimpleDateFormat(unlockerHmFormat);
+    static final SimpleDateFormat unlockerHmsSdf = new SimpleDateFormat(unlockerHmsFormat);
     static final SimpleDateFormat baseHmSdf = new SimpleDateFormat(baseHmFormat);
     static final SimpleDateFormat baseHmsSdf = new SimpleDateFormat(baseHmsFormat);
     static final SimpleDateFormat instantSdf = new SimpleDateFormat(instantFormat);
@@ -43,7 +45,9 @@ public class DTFormats {
     }
 
     // timeInterval - in seconds
-    public static String GetUTCdate(long timeInterval) {
+    public static String GetUTCdate(long timeInt) {
+        String res;
+        long timeInterval = timeInt / 1000;
         long nDays = TimeUnit.SECONDS.toDays(timeInterval);
 
         Instant date = Instant.ofEpochSecond(timeInterval);
@@ -53,8 +57,10 @@ public class DTFormats {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        String iDateStr = unlockerHmSdf.format(iDate);
-        return (getNumberOfDays(nDays) + " " + iDateStr).replace(" 0", "  ");
+//        String iDateStr = unlockerHmSdf.format(iDate);
+        String iDateStr = unlockerHmsSdf.format(iDate);
+        res = (getNumberOfDays(nDays) + " " + iDateStr).replace(" 0", "  ");
+        return res;
     }
 
     public static String getNumberOfDays(long nDays) {

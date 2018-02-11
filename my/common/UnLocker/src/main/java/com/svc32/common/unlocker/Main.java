@@ -28,7 +28,7 @@ public class Main {
         Unlocker ul = new Unlocker(currentLogPath);
         ul.setName("frmUnlocker");
 
-        System.out.println(ul);
+        System.out.println("ul:\n" + ul);
     }
 
     private static String getFilePath(String[] args) {

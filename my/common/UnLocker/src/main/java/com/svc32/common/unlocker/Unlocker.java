@@ -16,8 +16,12 @@ public class Unlocker extends JFrame {
 //    private static final int y = 15;
 
     //    Single Home Monitor, right-midle:
-    private static final int x = 1174;
-    private static final int y = 133;
+//    private static final int x = 1174;
+//    private static final int y = 133;
+
+    //    Note ProBook 4710s
+    private static final int x = 1086;
+    private static final int y = 7;
 
 //    //    1-st Monitor, right-midle:
 //    private static final int x = 680;
@@ -46,8 +50,8 @@ public class Unlocker extends JFrame {
         startUnlocker();
     }
 
-    public void startUnlocker() {
-        this.ulw = new UnlockLogWriter(this.logFile);
+    private void startUnlocker() {
+        ulw = new UnlockLogWriter(this.logFile);
         ulwThread = new Thread(ulw);
         ulwThread.start();
     }
