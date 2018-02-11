@@ -13,10 +13,10 @@ import static com.svc32.common.svc32Utils.file.FileFunctions.*;
 public class TestFiles {
     private static final String nullPath = null;
     private static final String emptyPath = "";
-    private static final String incorrectPath = "D:\\1\\2\\3:3\\4.txt";
-    private static final String noExtensionPath = "D:\\11\\22\\33";
-    private static final String correctPath = "D:\\111\\222\\333.log";
-    private static final String correctPath2 = "D:\\ws.gh\\my\\common\\UnLocker";
+    private static final String incorrectPath = "C:\\1\\2\\3:3\\4.txt";
+    private static final String noExtensionPath = "C:\\11\\22\\33";
+    private static final String correctPath = "C:\\111\\222\\333.log";
+    private static final String correctPath2 = "C:\\ws.gh\\my\\common\\UnLocker";
 
     @Test
     public void test_getLogFile() throws IOException {
