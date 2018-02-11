@@ -111,9 +111,14 @@ public class FileFunctions {
 
 		public static void writeProperties(Properties properties, File propertyFile) {
 		FileOutputStream out = null;
+//		Writer wr = null;
+		BufferedWriter wr = null;
 		try {
 			out = new FileOutputStream(propertyFile);
-			properties.store(out, null);
+			wr = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+//			properties.store(out, null);
+//			properties.store(wr, null);
+			properties.store(wr, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -124,9 +129,19 @@ public class FileFunctions {
 					e.printStackTrace();
 				}
 			}
+			if (wr != null) {
+				try {
+					wr.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
+	// %[argument_index$][flags][width][.precision]conversion
+	// %[argument_index$][flags][width]conversion
+	// %[flags][width]conversion
 	public static String escapeUnicode(String input) {
 		StringBuilder b = new StringBuilder(input.length());
 		Formatter f = new Formatter(b);
