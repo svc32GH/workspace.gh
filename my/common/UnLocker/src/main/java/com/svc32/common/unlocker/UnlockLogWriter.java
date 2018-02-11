@@ -25,14 +25,17 @@ public class UnlockLogWriter implements Runnable {
     public void run() {
         startTimeStamp = System.currentTimeMillis();
         long currentInterval;
-        writeLog("UnLocker started on " + DateTimeSecZ(new Date()));
+        writeLog("Started on " + DateTimeSecZ(new Date()));
 
         try {
             while (continueRun) {
                 Thread.sleep(delayInt);
+//                currentInterval = System.currentTimeMillis() - startTimeStamp + 55000;
                 currentInterval = System.currentTimeMillis() - startTimeStamp;
 
-                String line = GetUTCdate(currentInterval);
+                String line = GetUTCdate(currentInterval)
+                        .replace("0H", "  ")
+                        .replace("0min", "    ");
                 writeLog("Elapsed time: " + line);
 //                System.out.println(date);
             }

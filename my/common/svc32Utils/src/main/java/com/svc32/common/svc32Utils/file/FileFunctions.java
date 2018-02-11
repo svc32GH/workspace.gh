@@ -44,13 +44,12 @@ public class FileFunctions {
 	}
 	
 	public static void writeFile(File file, String line) {
-	 
+		PrintWriter out = null;
+
 	    try {
-	        if(!file.exists()){
+	        if(!file.exists())
 	            file.createNewFile();
-	        }
-	 
-	        PrintWriter out = new PrintWriter(file.getAbsoluteFile());
+	        out = new PrintWriter(file.getAbsoluteFile());
 	        try {
 	            out.print(line);
 	        } finally {
@@ -70,7 +69,7 @@ public class FileFunctions {
 				file.createNewFile();
 			fWriter = new FileWriter(file, true);
 			fWriter.write(line + "\n");
-			fWriter.flush();
+			fWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
