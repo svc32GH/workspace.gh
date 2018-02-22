@@ -1,6 +1,7 @@
 package com.svc32.common.unlocker;
 
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -9,7 +10,7 @@ import static com.svc32.common.svc32Utils.file.FileFunctions.*;
 
 public class Main {
 //    private final static String path = "C:\\ws.git\\my\\common\\UnLocker\\WorkLog.log";
-    private final static String path = "D:\\ws.git\\my\\common\\UnLocker\\WorkLog.log";
+//    private final static String path = "D:\\ws.git\\my\\common\\UnLocker\\WorkLog.log";
 
     /**
      * @param  args
@@ -21,12 +22,23 @@ public class Main {
         String logFilePath = getFilePath(args);
         System.out.println(logFilePath);
 
-        new Main().run(logFilePath);
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    new Main().run(logFilePath);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
     private void run(String logFilePath) throws IOException {
         File currentLogPath = getLogFile(logFilePath);
-        Unlocker ul = new Unlocker(currentLogPath);
+        Unlocker ul = null;
+        ul = new Unlocker(currentLogPath);
         ul.setName("frmUnlocker");
 
 //        System.out.println("ul:\n" + ul);

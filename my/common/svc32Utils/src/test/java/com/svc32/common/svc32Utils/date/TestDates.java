@@ -24,13 +24,13 @@ public class TestDates {
 
     @Test
     public void test_GetUTCdate() {
-        long k = 24 * 60 * 60;
+        long k = 24 * 60 * 60 * 1000;
         for (int i=0; i<6; i++  )
             System.out.println("| " + GetUTCdate(nDaysArray[i] * k + oneHour16mins) + " |");
 
-        System.out.println("\n| " + GetUTCdate(oneHour16mins) + " |");
-        System.out.println("| " + GetUTCdate(oneHour02mins) + " |");
-        System.out.println("| " + GetUTCdate(tenHour16mins) + " |");
-        System.out.println("| " + GetUTCdate(tenHour02mins) + " |");
+        System.out.println("\n| " + GetUTCdate(oneHour16mins * 1000) + " |");
+        System.out.println("| " + GetUTCdate(oneHour02mins * 1000) + " |");
+        System.out.println("| " + GetUTCdate(tenHour16mins * 1000) + " |");
+        System.out.println("| " + GetUTCdate(tenHour02mins * 1000) + " |");
     }
 }

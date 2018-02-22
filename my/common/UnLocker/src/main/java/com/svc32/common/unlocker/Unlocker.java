@@ -41,6 +41,9 @@ public class Unlocker extends JFrame {
     private Thread ulwThread;
     private File logFile;
 
+    private Robot robot;
+    private DefaultListModel listModel;
+
     public Unlocker(String logFilePath) throws IOException {
         constructFrame(new File(logFilePath));
         startUnlocker();
@@ -52,12 +55,17 @@ public class Unlocker extends JFrame {
     }
 
     private void startUnlocker() throws IOException {
-        ulw = new UnlockLogWriter(this.logFile);
+        ulw = new UnlockLogWriter(this.logFile, this, robot);
         ulwThread = new Thread(ulw);
         ulwThread.start();
     }
 
     private void constructFrame(File logFile) {
+        try {
+            robot = new Robot();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
         this.logFile = logFile;
         this.setTitle("Unlock Monitor");
         this.setBounds(x, y, width, height);
@@ -98,13 +106,13 @@ public class Unlocker extends JFrame {
         pnlBot.setBackground(new Color(138, 100, 94));
         pnlBot.add(btn);
 
-        final DefaultListModel listModel = new DefaultListModel();
+        listModel = new DefaultListModel();
         JList list = new JList(listModel);
         listBox = list;
 
-        for (int i = 0; i < 25; i++) {
-            listModel.addElement("Item element " + i);
-        }
+//        for (int i = 0; i < 25; i++) {
+//            listModel.addElement("Item element " + i);
+//        }
 
         pnlMain.add(pnlMainLeft, BorderLayout.WEST);
         pnlMain.add(pnlMainRight, BorderLayout.EAST);
@@ -126,6 +134,12 @@ public class Unlocker extends JFrame {
 
         //        this.getBounds()
 
+    }
+
+    public void addString(String line) {
+        listModel.addElement(line);
+        repaint();
+        pack();
     }
 
 }

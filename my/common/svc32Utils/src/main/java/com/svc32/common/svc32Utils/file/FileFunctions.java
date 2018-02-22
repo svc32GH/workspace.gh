@@ -104,6 +104,7 @@ public class FileFunctions {
 				file.createNewFile();
 			fWriter = new FileWriter(file, true);
 			fWriter.write(line + "\n");
+			fWriter.flush();
 			fWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();

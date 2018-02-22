@@ -4,19 +4,26 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
 public class DTFormats {
     static final String unlockerHmFormat = "HH'H' mm'min'";
-    static final String unlockerHmsFormat = "HH'H' mm'min' ss'sec'";
-    static final String baseHmFormat = "HH:mm";
-    static final String baseHmsFormat = "HH:mm:ss";
-    static final String instantFormat = "yyyy-MM-dd'T'HH:mm:ss";
-
     static final SimpleDateFormat unlockerHmSdf = new SimpleDateFormat(unlockerHmFormat);
+
+    static final String unlockerHmsFormat = "HH'H' mm'min' ss'sec'";
     static final SimpleDateFormat unlockerHmsSdf = new SimpleDateFormat(unlockerHmsFormat);
+
+    static final String baseHmFormat = "HH:mm";
     static final SimpleDateFormat baseHmSdf = new SimpleDateFormat(baseHmFormat);
+
+    static final String baseHmsFormat = "HH:mm:ss";
     static final SimpleDateFormat baseHmsSdf = new SimpleDateFormat(baseHmsFormat);
+
+    static final String customHmsFormat = "YY'Y' DDD'days' HH'H' mm'min' ss'sec'";
+    static final SimpleDateFormat customHmsSdf = new SimpleDateFormat(customHmsFormat);
+
+    static final String instantFormat = "yyyy-MM-dd'T'HH:mm:ss";
     static final SimpleDateFormat instantSdf = new SimpleDateFormat(instantFormat);
 
     static final String logDTZformat = "yyyy.MM.dd 'at' HH:mm:ss z";
@@ -27,6 +34,16 @@ public class DTFormats {
 //    static {
 //        baseHmsSdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 //        instantSdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+//    }
+
+//    public static long getMiliseconds(String customDateString) throws ParseException {
+//        long res = 0;
+//        Date resDate = customHmsSdf.parse(customDateString);
+//        resDate.toInstant()
+//
+//        GregorianCalendar cal = new GregorianCalendar(resDate);
+//
+//        return res;
 //    }
 
     public static String getDateOnly(Date date) {
