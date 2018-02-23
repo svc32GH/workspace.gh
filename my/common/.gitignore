@@ -6,5 +6,5 @@
 **/*.class
 **/*.log
 **/ReadMe.txt
-**/WorkLog.txt
-**/WorkLog.log
+**/WorkLog*.txt
+**/WorkLog*.log
