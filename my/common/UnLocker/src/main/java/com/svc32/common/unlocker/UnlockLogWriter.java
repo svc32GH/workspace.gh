@@ -75,8 +75,10 @@ public class UnlockLogWriter implements Runnable {
                 currentInterval = System.currentTimeMillis() - startTimeStamp;
 
                 String line = GetUTCdate(currentInterval)
-                        .replace("0H", "  ")
-                        .replace("0min", "    ");
+                        .replace(" 0H", "   ")
+                        .replace(" 0min", "     ")
+                        .replace(" 0sec", "     ")
+                        ;
                 robot.keyPress(KeyEvent.VK_NUM_LOCK);
                 robot.keyRelease(KeyEvent.VK_NUM_LOCK);
                 robot.keyPress(KeyEvent.VK_NUM_LOCK);
