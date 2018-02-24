@@ -2,8 +2,6 @@ package com.svc32.common.unlocker;
 
 import com.svc32.common.svc32Utils.file.FileFunctions;
 
-import javax.swing.*;
-
 import static com.svc32.common.svc32Utils.file.FileFunctions.*;
 import static com.svc32.common.svc32Utils.date.DTFormats.*;
 import static com.svc32.common.svc32Utils.file.FileFunctions.rewriteLastLine;
@@ -12,15 +10,19 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 
 public class UnlockLogWriter implements Runnable {
-//    private static final int delayInt = 1000;
-//    private static final int delayInt = 1000 * 5; // 5 sec
-    private static final int delayInt = 1000 * 60 * 5; // 5 mins
-    private static final String startedOn = "Started on ";
-    private static final String elapsedTime = "Elapsed time: ";
+    private final int delayInt;
+//    private static final int _delayInt_test = 1000;
+    private static final int _delayInt_test = 1000 * 5; // 5 sec
+    private static final int _delayInt_run = 1000 * 60 * 5; // 5 min
+    private static final String startedOnStr = "Started on ";
+    private static final String elapsedTimeStr = "Elapsed time: ";
+    private static final String elapsedTime0sec = "Elapsed time:                   0sec";
     private final String prevStartDate;
+    private final String elapsedTime;
     private final long prevStartSec;
     private final String currentDate;
 
@@ -36,20 +38,33 @@ public class UnlockLogWriter implements Runnable {
     private final Robot robot;
 
     public UnlockLogWriter(File logFile, Unlocker unlocker, Robot robot) throws IOException {
+        delayInt = unlocker.isTestMode() ? _delayInt_test : _delayInt_run;
         this.unlocker = unlocker;
         this.robot = robot;
         this.logFile = logFile;
         this.continueRun = true;
         this.ff = new FileFunctions(logFile);
 //        this.startDateTime = System.currentTimeMillis();
+
         String startDateString = getStartDate();
-        if (startDateString.equals("|")) {
+        String[] dateArray = startDateString.split("\\|");
+        int len = dateArray.length;
+
+        if (startDateString.equals("||")) {
             prevStartDate = "";
+            elapsedTime = "";
             prevStartSec = 0;
         } else {
-            prevStartDate = startDateString.split("\\|")[0];
-            String prevStartSecStr = startDateString.split("\\|")[1];
-            prevStartSec = Long.parseLong(prevStartSecStr);
+            if (len == 1) {
+                prevStartDate = dateArray[0];
+                elapsedTime = "";
+                prevStartSec = 0;
+            } else {
+                prevStartDate = dateArray[0];
+                String prevStartSecStr = dateArray[1];
+                prevStartSec = Long.parseLong(prevStartSecStr);
+                elapsedTime = dateArray[2];
+            }
         }
 
         currentDate = getDateOnly(new Date());
@@ -97,13 +112,19 @@ public class UnlockLogWriter implements Runnable {
     }
 
     protected void writeStartLine() {
+        unlocker.addString(startedOnStr + startDateTime);
         if (!isTheSameStartDay) {
-            writeToFile(logFile, startedOn + startDateTime);
-//            listModel.
+            writeToFile(logFile, startedOnStr + startDateTime);
             startLinePrinted = true;
+        } else {
+            if (elapsedTime.equals(elapsedTime0sec) || elapsedTime.length() == 0)
+                writeToFile(logFile, elapsedTime0sec);
         }
-        unlocker.addString(startedOn + startDateTime);
+
+        if (isTheSameStartDay)
+            unlocker.addString(elapsedTime);
     }
+
     //                Date.from(Instant.ofEpochSecond(currentInterval));
     protected void writeLog(String line) throws IOException {
 //        String prevStartDate = getStartDate();
@@ -111,37 +132,59 @@ public class UnlockLogWriter implements Runnable {
 
         // Put "Elapsed time" line;
         if (startLinePrinted) {
-            writeToFile(logFile, elapsedTime + line);
+            writeToFile(logFile, elapsedTimeStr + line);
             startLinePrinted = false;
         } else {
-            rewriteLastLine(logFile, elapsedTime + line);
+            rewriteLastLine(logFile, elapsedTimeStr + line);
         }
-        unlocker.addString(elapsedTime + line);
 
+        if (unlocker.getRowCount() == 2 )
+            unlocker.changeString(elapsedTimeStr + line);
+        else
+            unlocker.addString(elapsedTimeStr + line);
     }
 
     public String getStartDate() throws IOException {
         String startDate = null;
+        String prevStartDate = null;
+        String timeElapsed = null;
         String startTimeInMilisecSec = null;
         String line = null;
-        while ((line = ff.readFileLine()) != null)
-            if (line.startsWith(startedOn))
+        boolean elapsedIsLast = false;
+        while ((line = ff.readFileLine()) != null) {
+            prevStartDate = startDate;
+            if (line.startsWith(startedOnStr)) {
                 startDate = line;
-            else
+                elapsedIsLast = false;
+            } else {
                 startTimeInMilisecSec = line;
+                elapsedIsLast = true;
+            }
+        }
 
         ff.reopenReader();
         if (startDate == null)
             startDate = "";
         else
-            startDate = startDate.substring(startedOn.length(), startDate.indexOf(" at "));
+            startDate = startDate.substring(startedOnStr.length(), startDate.indexOf(" at "));
 
-        if (startTimeInMilisecSec == null)
+        if (startTimeInMilisecSec == null) {
+            timeElapsed = "";
             startTimeInMilisecSec = "";
-        else
-            startTimeInMilisecSec = String.valueOf(getStartTimeAsMiliSeconds(startTimeInMilisecSec));
+        } else {
+            if (elapsedIsLast) {
+                timeElapsed = startTimeInMilisecSec;
+                startTimeInMilisecSec = String.valueOf(getStartTimeAsMiliSeconds(startTimeInMilisecSec));
+            } else {
+                timeElapsed = elapsedTime0sec;
+                startTimeInMilisecSec = "0";
+            }
+        }
 
-        return startDate + "|" + startTimeInMilisecSec;
+        String res = startDate
+                + "|" + startTimeInMilisecSec
+                + "|" + timeElapsed;
+        return res;
     }
 
     protected String getStartTime(String line) {

@@ -35,6 +35,7 @@ public class Unlocker extends JFrame {
     private static final int width = 500;
     private static final int height = 500;
 
+    private boolean isTestMode;
     private JFrame thisFrame;
     private JList listBox;
     private UnlockLogWriter ulw;
@@ -44,12 +45,14 @@ public class Unlocker extends JFrame {
     private Robot robot;
     private DefaultListModel listModel;
 
-    public Unlocker(String logFilePath) throws IOException {
+    public Unlocker(String logFilePath, boolean isTestMode) throws IOException {
+        this.isTestMode = isTestMode;
         constructFrame(new File(logFilePath));
         startUnlocker();
     }
 
-    public Unlocker(File logFile) throws IOException {
+    public Unlocker(File logFile, boolean isTestMode) throws IOException {
+        this.isTestMode = isTestMode;
         constructFrame(logFile);
         startUnlocker();
     }
@@ -140,6 +143,21 @@ public class Unlocker extends JFrame {
         listModel.addElement(line);
         repaint();
         pack();
+    }
+
+    public void changeString(String line) {
+        int index = listModel.getSize() - 1;
+        listModel.setElementAt(line, index);
+        repaint();
+        pack();
+    }
+
+    public int getRowCount() {
+        return listModel.getSize();
+    }
+
+    public boolean isTestMode() {
+        return isTestMode;
     }
 
 }

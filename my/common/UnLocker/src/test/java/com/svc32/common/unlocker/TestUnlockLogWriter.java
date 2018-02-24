@@ -18,7 +18,7 @@ public class TestUnlockLogWriter {
 
     static {
         try {
-            listModel = new Unlocker(new File(path));
+            listModel = new Unlocker(new File(path), true);
         } catch (IOException e) {
             e.printStackTrace();
         }
