@@ -1,5 +1,6 @@
 import java.io.*;
 import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import javax.servlet.http.HttpServlet;
 import java.util.ArrayList;
@@ -7,9 +8,10 @@ import java.util.ArrayList;
 import databases.SQLiteClass;
 import org.json.JSONObject;
 
+@WebServlet("/MainServlet")
 public class MainServlet extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         response.setContentType("text/html");

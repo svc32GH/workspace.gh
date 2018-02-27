@@ -1,8 +1,5 @@
-
 var serverHostName = window.location.hostname;
-
 var serverProtocolName = window.location.protocol;
-
 var portName = window.location.port;
 
 if (portName.length == 0) {
