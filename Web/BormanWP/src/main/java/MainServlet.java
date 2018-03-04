@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import databases.SQLiteClass;
 import org.json.JSONObject;
 
-@WebServlet("/MainServlet")
+@WebServlet(name = "MainServlet", urlPatterns = "/")
 public class MainServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
