@@ -2,6 +2,7 @@ package com.svc32.common.unlocker;
 
 import com.svc32.common.svc32Utils.file.FileFunctions;
 
+import static com.svc32.common.svc32Utils.date.DTFormats.parseDateTimeSecZ;
 import static com.svc32.common.svc32Utils.file.FileFunctions.*;
 import static com.svc32.common.svc32Utils.date.DTFormats.*;
 import static com.svc32.common.svc32Utils.file.FileFunctions.rewriteLastLine;
@@ -10,7 +11,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+import java.text.ParseException;
 import java.util.Date;
 
 public class UnlockLogWriter implements Runnable {
@@ -29,7 +30,8 @@ public class UnlockLogWriter implements Runnable {
     private boolean continueRun;
     private boolean startLinePrinted = false;
     private boolean isTheSameStartDay = false;
-    private final String startDateTime = getDateTimeSecZ(new Date());
+    private final Date startDateTime = new Date();
+    private final String startDateTimeStr = getDateTimeSecZ(new Date());
 
     private long startTimeStamp;
     private File logFile;
@@ -37,14 +39,14 @@ public class UnlockLogWriter implements Runnable {
     private final Unlocker unlocker;
     private final Robot robot;
 
-    public UnlockLogWriter(File logFile, Unlocker unlocker, Robot robot) throws IOException {
+    public UnlockLogWriter(File logFile, Unlocker unlocker, Robot robot) throws IOException, ParseException {
         delayInt = unlocker.isTestMode() ? _delayInt_test : _delayInt_run;
         this.unlocker = unlocker;
         this.robot = robot;
         this.logFile = logFile;
         this.continueRun = true;
         this.ff = new FileFunctions(logFile);
-//        this.startDateTime = System.currentTimeMillis();
+//        this.startDateTimeStr = System.currentTimeMillis();
 
         String startDateString = getStartDate();
         String[] dateArray = startDateString.split("\\|");
@@ -64,6 +66,11 @@ public class UnlockLogWriter implements Runnable {
                 String prevStartSecStr = dateArray[1];
                 prevStartSec = Long.parseLong(prevStartSecStr);
                 elapsedTime = dateArray[2];
+                if (prevStartSec== 0 && elapsedTime.equals("Elapsed time:                   0sec")) {
+
+                } else {
+
+                }
             }
         }
 
@@ -112,9 +119,9 @@ public class UnlockLogWriter implements Runnable {
     }
 
     protected void writeStartLine() {
-        unlocker.addString(startedOnStr + startDateTime);
+        unlocker.addString(startedOnStr + startDateTimeStr);
         if (!isTheSameStartDay) {
-            writeToFile(logFile, startedOnStr + startDateTime);
+            writeToFile(logFile, startedOnStr + startDateTimeStr);
             startLinePrinted = true;
         } else {
             if (elapsedTime.equals(elapsedTime0sec) || elapsedTime.length() == 0)
@@ -144,7 +151,7 @@ public class UnlockLogWriter implements Runnable {
             unlocker.addString(elapsedTimeStr + line);
     }
 
-    public String getStartDate() throws IOException {
+    public String getStartDate() throws IOException, ParseException {
         String startDate = null;
         String prevStartDate = null;
         String timeElapsed = null;
@@ -161,8 +168,14 @@ public class UnlockLogWriter implements Runnable {
                 elapsedIsLast = true;
             }
         }
-
         ff.reopenReader();
+
+//        String prevStartDateTimeStr = startDate.substring(11);
+//        Date prevStartDateTime = parseDateTimeSecZ(prevStartDateTimeStr);
+//        long diffL = startDateTime.getTime() - prevStartDateTime.getTime();
+//        String diffS = convertMs2TimeInt(diffL);
+//        System.out.println(prevStartDateTimeStr);
+
         if (startDate == null)
             startDate = "";
         else

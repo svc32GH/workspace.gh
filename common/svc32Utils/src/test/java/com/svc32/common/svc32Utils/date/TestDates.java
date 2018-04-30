@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import static com.svc32.common.svc32Utils.date.DTFormats.*;
 
@@ -32,5 +33,52 @@ public class TestDates {
         System.out.println("| " + GetUTCdate(oneHour02mins * 1000) + " |");
         System.out.println("| " + GetUTCdate(tenHour16mins * 1000) + " |");
         System.out.println("| " + GetUTCdate(tenHour02mins * 1000) + " |");
+    }
+
+    @Test
+    public void testParseDate() throws ParseException {
+        String dateString = "2016.03.17 at 10:59:27 EET";
+        Date date = parseDateTimeSecZ(dateString);
+        String dateStringRenew = getDateTimeSecZ(date);
+        System.out.println("dateString      = " + dateString);
+        System.out.println("date            = " + date);
+        System.out.println("dateStringRenew = " + dateStringRenew);
+
+        Date currentDate = new Date();
+        System.out.println("currentDate     = " + currentDate);
+
+        System.out.println();
+
+        System.out.println("date            = " + new Date( date.getTime() ));
+        System.out.println("dateString      = " + new Date( currentDate.getTime() ));
+
+        long diffL = currentDate.getTime() - date.getTime();
+        Date diff = new Date( diffL );
+        System.out.println("diff            = " + diff);
+        String diffS = convertMs2TimeInt(diffL);
+        System.out.println("diffS           = " + diffS);
+
+        String diffYdhms = getYdhms(diff);
+        System.out.println("diffYdhms       = " + diffYdhms);
+
+        System.out.println();
+
+        System.out.println("0-Date          = " + new Date(0L));
+
+        Map<TimeUnit, Long> difff = computeDiff(date, currentDate);
+        System.out.println("difff           = " + difff);
+
+    }
+
+    @Test
+    public void testStringFormat() {
+        int y1 = 22;
+        int y2 = 2;
+        System.out.println(
+                "\n"
+                        + "y1 = " + String.format("%1$2dY", y1)
+                        + "\n"
+                        + "y2 = " + String.format("%1$2dY n", y2)
+        );
     }
 }

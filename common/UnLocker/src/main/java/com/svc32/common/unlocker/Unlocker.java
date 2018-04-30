@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 
 public class Unlocker extends JFrame {
     //    3-rd Monitor:
@@ -45,19 +46,19 @@ public class Unlocker extends JFrame {
     private Robot robot;
     private DefaultListModel listModel;
 
-    public Unlocker(String logFilePath, boolean isTestMode) throws IOException {
+    public Unlocker(String logFilePath, boolean isTestMode) throws IOException, ParseException {
         this.isTestMode = isTestMode;
         constructFrame(new File(logFilePath));
         startUnlocker();
     }
 
-    public Unlocker(File logFile, boolean isTestMode) throws IOException {
+    public Unlocker(File logFile, boolean isTestMode) throws IOException, ParseException {
         this.isTestMode = isTestMode;
         constructFrame(logFile);
         startUnlocker();
     }
 
-    private void startUnlocker() throws IOException {
+    private void startUnlocker() throws IOException, ParseException {
         ulw = new UnlockLogWriter(this.logFile, this, robot);
         ulwThread = new Thread(ulw);
         ulwThread.start();

@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
 import static com.svc32.common.svc32Utils.date.DTFormats.*;
@@ -21,6 +22,8 @@ public class TestUnlockLogWriter {
             listModel = new Unlocker(new File(path), true);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         try {
             robot = new Robot();
@@ -30,7 +33,7 @@ public class TestUnlockLogWriter {
     }
 
     @Test
-    public void testGetStartDate() throws IOException {
+    public void testGetStartDate() throws IOException, ParseException {
 //        System.out.println(args);
 
         UnlockLogWriter ulw = new UnlockLogWriter(new File(path), listModel, robot);
@@ -44,7 +47,7 @@ public class TestUnlockLogWriter {
     }
 
     @Test
-    public void testGetStartTimeAsSeconds() throws IOException {
+    public void testGetStartTimeAsSeconds() throws IOException, ParseException {
         UnlockLogWriter ulw = new UnlockLogWriter(new File(path), listModel, robot);
 
         String line;

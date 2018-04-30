@@ -4,18 +4,19 @@ package com.svc32.common.unlocker;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Arrays;
 
 import static com.svc32.common.svc32Utils.file.FileFunctions.*;
 
 public class Main {
-//    private final static String path = "C:\\ws.git\\my\\common\\UnLocker\\WorkLog.log";
-//    private final static String path = "D:\\ws.git\\my\\common\\UnLocker\\WorkLog.log";
+//    private final static String path = "C:\\wsRoot.git\\svc32WS\\common\\UnLocker\\WorkLog.log";
 
     /**
      * @param  args
-     *         -lp=logFilePath, e.g. -lp=D:\ws.git\my\common\UnLocker\WorkLog.log
-     *             if not provided: log file will be created by path: @user.home\WorkLog.txt
+     *         -lp=logFilePath, - log file path, e.g. -lp=D:\wsRoot.git\svc32WS\common\UnLocker\WorkLog.log
+     *                             if not provided: log file will be created by path: @user.home\WorkLog.txt
+     *         -t=y             - test mode
      */
     public static void main(String[] args) throws IOException {
 
@@ -30,13 +31,15 @@ public class Main {
                     new Main().run(logFilePath, isTestMode);
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
             }
         });
 
     }
 
-    private void run(String logFilePath, boolean runMode) throws IOException {
+    private void run(String logFilePath, boolean runMode) throws IOException, ParseException {
         File currentLogPath = getLogFile(logFilePath);
         Unlocker ul = null;
         ul = new Unlocker(currentLogPath, runMode);
