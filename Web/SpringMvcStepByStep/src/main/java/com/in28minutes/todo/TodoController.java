@@ -2,6 +2,8 @@ package com.in28minutes.todo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -28,14 +30,24 @@ public class TodoController {
 
     @RequestMapping(value="/list-todos", method= RequestMethod.GET)
     public String listTodos(ModelMap model) {
-        model.addAttribute("todos", service.retrieveTodos("in28Minutes"));
+        model.addAttribute("todos", service.retrieveTodos(retrieveLoggedInUserName()));
         return "list-todos";
     }
+
+    private String retrieveLoggedInUserName() {
+        Object principal = SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails)
+            return ((UserDetails) principal).getUsername();
+
+        return principal.toString();
+   }
 
     @RequestMapping(value="/add-todo", method= RequestMethod.GET)
     public String showTodoPage(ModelMap model) {
 //        model.addAttribute("todo", new Todo(0, "in28Minutes", "", new Date(), false));
-        model.addAttribute("todo", new Todo(0, "in28Minutes", "Default Description", new Date(), false));
+        model.addAttribute("todo", new Todo(0, retrieveLoggedInUserName(), "Default Description", new Date(), false));
         return "todo";
     }
 
@@ -45,7 +57,7 @@ public class TodoController {
             return "todo";
         }
 
-        service.addTodo("in28Minutes", todo.getDesc(), new Date(), false);
+        service.addTodo(retrieveLoggedInUserName(), todo.getDesc(), new Date(), false);
         model.clear();
         return "redirect:list-todos";
     }
@@ -69,7 +81,7 @@ public class TodoController {
         if (result.hasErrors()) {
             return "todo";
         }
-        todo.setUser("in28Minutes"); //TODO:Remove Hardcoding Later
+        todo.setUser(retrieveLoggedInUserName()); //TODO:Remove Hardcoding Later
 
         service.updateTodo(todo);
         return "redirect:list-todos";
