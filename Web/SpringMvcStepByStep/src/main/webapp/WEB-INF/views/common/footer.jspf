@@ -1,0 +1,11 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: SChudakov
+  Date: 03.05.2018
+  Time: 18:57
+  To change this template use File | Settings | File Templates.
+--%>
+<script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</body>
+</html>
