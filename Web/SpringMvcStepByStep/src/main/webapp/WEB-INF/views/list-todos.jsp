@@ -2,8 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-<title>Yahoo!!</title>
-<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <title>Yahoo!!</title>
+    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -13,6 +13,7 @@
             <thead>
             <tr>
                 <th>id</th>
+                <th>User</th>
                 <th>Description</th>
                 <th>Target Date</th>
                 <th>Is Completed?</th>
@@ -24,10 +25,14 @@
             <c:forEach items="${todos}" var="todo">
                 <tr>
                     <td>${todo.id}</td>
+                    <td>${todo.user}</td>
                     <td>${todo.desc}</td>
                     <td>${todo.targetDate}</td>
                     <td>${todo.done}</td>
-                    <td><a href="/delete-todo?id=${todo.id}" class="btn btn-danger">Delete</a></td>
+                    <td>
+                        <a href="/update-todo?id=${todo.id}" class="btn btn-success">Update</a>
+                        <a href="/delete-todo?id=${todo.id}" class="btn btn-danger">Delete</a>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
