@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SoapCourceManagementApplication {
+public class SoapCourseManagementApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SoapCourceManagementApplication.class, args);
+		SpringApplication.run(SoapCourseManagementApplication.class, args);
 	}
 }
