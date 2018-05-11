@@ -1,6 +1,7 @@
 package com.in28minutes.soap.webservices.soapcourcemanagement.soap;
 
 //com.in28minutes.soap.webservices.soapcourcemanagement.soap.service
+
 import com.in28minutes.soap.webservices.soapcourcemanagement.soap.exception.CourseNotFoundException;
 import com.in28minutes.soap.webservices.soapcourcemanagement.soap.service.CourseDetailsService;
 import com.in28minutes.courses.*;
@@ -42,7 +43,7 @@ public class CourseDetailsEndpoint {
     @PayloadRoot(namespace = "http://in28minutes.com/courses", localPart = "DeleteCourseRequest")
     @ResponsePayload
     public GetCourseDetailsResponse deleteCourseRequest(@RequestPayload
-                                                                               DeleteCourseRequest request) {
+                                                                DeleteCourseRequest request) {
 
         Course course = service.deleteById(request.getId());
 
@@ -52,7 +53,7 @@ public class CourseDetailsEndpoint {
     @PayloadRoot(namespace = "http://in28minutes.com/courses", localPart = "DeleteCourseStatusRCRequest")
     @ResponsePayload
     public DeleteCourseStatusRCResponse deleteCourseStatusRCRequest(@RequestPayload
-                                                                               DeleteCourseStatusRCRequest request) {
+                                                                            DeleteCourseStatusRCRequest request) {
         DeleteCourseStatusRCResponse response = new DeleteCourseStatusRCResponse();
         int status = service.deleteByIdRC(request.getId());
         response.setStatus(status);
@@ -62,7 +63,7 @@ public class CourseDetailsEndpoint {
     @PayloadRoot(namespace = "http://in28minutes.com/courses", localPart = "DeleteCourseStatusRequest")
     @ResponsePayload
     public DeleteCourseStatusResponse deleteCourseStatusRequest(@RequestPayload
-                                                                               DeleteCourseStatusRequest request) {
+                                                                        DeleteCourseStatusRequest request) {
         CourseDetailsService.Status status = service.deleteByIdStatus(request.getId());
         DeleteCourseStatusResponse response = new DeleteCourseStatusResponse();
         response.setStatus(mapStatus(status));
