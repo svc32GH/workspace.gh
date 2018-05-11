@@ -1,11 +1,11 @@
-package com.in28minutes.soap.webservices.soapcourcemanagement.soap;
+package com.in28minutes.soap.webservices.soapcoursemanagement.soap;
 
-//com.in28minutes.soap.webservices.soapcourcemanagement.soap.service
+//com.in28minutes.soap.webservices.soapcoursemanagement.soap.service
 
-import com.in28minutes.soap.webservices.soapcourcemanagement.soap.exception.CourseNotFoundException;
-import com.in28minutes.soap.webservices.soapcourcemanagement.soap.service.CourseDetailsService;
+import com.in28minutes.soap.webservices.soapcoursemanagement.soap.exception.CourseNotFoundException;
+import com.in28minutes.soap.webservices.soapcoursemanagement.soap.service.CourseDetailsService;
 import com.in28minutes.courses.*;
-import com.in28minutes.soap.webservices.soapcourcemanagement.soap.bean.Course;
+import com.in28minutes.soap.webservices.soapcoursemanagement.soap.bean.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;

@@ -1,4 +1,4 @@
-package com.in28minutes.soap.webservices.soapcourcemanagement.soap.exception;
+package com.in28minutes.soap.webservices.soapcoursemanagement.soap.exception;
 
 import org.springframework.ws.soap.server.endpoint.annotation.FaultCode;
 import org.springframework.ws.soap.server.endpoint.annotation.SoapFault;

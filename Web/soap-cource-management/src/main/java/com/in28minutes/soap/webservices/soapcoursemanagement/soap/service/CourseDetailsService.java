@@ -1,6 +1,6 @@
-package com.in28minutes.soap.webservices.soapcourcemanagement.soap.service;
+package com.in28minutes.soap.webservices.soapcoursemanagement.soap.service;
 
-import com.in28minutes.soap.webservices.soapcourcemanagement.soap.bean.Course;
+import com.in28minutes.soap.webservices.soapcoursemanagement.soap.bean.Course;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

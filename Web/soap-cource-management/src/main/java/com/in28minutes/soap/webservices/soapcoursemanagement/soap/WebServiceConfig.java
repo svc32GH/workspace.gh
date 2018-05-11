@@ -1,4 +1,4 @@
-package com.in28minutes.soap.webservices.soapcourcemanagement.soap;
+package com.in28minutes.soap.webservices.soapcoursemanagement.soap;
 
 //Enable Spring Web Services
 
@@ -17,7 +17,6 @@ import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
 
-import javax.security.auth.callback.CallbackHandler;
 import java.util.Collections;
 import java.util.List;
 

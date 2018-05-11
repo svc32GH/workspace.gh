@@ -1,4 +1,4 @@
-package com.in28minutes.soap.webservices.soapcourcemanagement;
+package com.in28minutes.soap.webservices.soapcoursemanagement;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
