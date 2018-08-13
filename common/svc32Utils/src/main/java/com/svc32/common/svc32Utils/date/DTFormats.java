@@ -81,6 +81,30 @@ public class DTFormats {
         return yearS + dayS + hourS + minS + secS;
     }
 
+    public static String convertMs2H(long milisecs) {
+        long secs = milisecs / 1000;
+        long hours = secs / 3600;
+        long mins = (secs / 60) % 60;
+        secs = secs % 60;
+        String hourS = (hours == 0 ? "    " : String.format("%1$2dH ", hours) );
+        String minS = (mins == 0 ? "      " : String.format("%1$2dmin ", mins) );
+        String secS = (secs == 0 ? "   " : String.format("%1$2dsec ", secs) );
+        return hourS + minS + secS;
+    }
+
+    public static String getWeekDaysInterval(int year, int week) {
+        GregorianCalendar cal = new GregorianCalendar(year, 0, 1);
+        cal.add(Calendar.DATE, (week-1)*7);
+        StringBuffer res = new StringBuffer( String.format( "%1$tY.%1$tm.%1$td %1$ta", cal.getTime() ) );
+        cal.add(Calendar.DATE, 6);
+        res.append( " - " + String.format( "%1$tY.%1$tm.%1$td %1$ta", cal.getTime() ) );
+        return res.toString();
+    }
+
+    public static long convertHMS2Ms(int H, int min, int sec) {
+        return H*60*60*1000 + min*60*1000 + sec*1000;
+    }
+
     // timeInterval - in seconds
     public static String GetUTCdate(long timeInt) {
         String res;

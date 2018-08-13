@@ -39,6 +39,8 @@ public class Unlocker extends JFrame {
     private boolean isTestMode;
     private JFrame thisFrame;
     private JList listBox;
+    private JTabbedPane tabsheet;
+
     private UnlockLogWriter ulw;
     private Thread ulwThread;
     private File logFile;
@@ -123,7 +125,13 @@ public class Unlocker extends JFrame {
         pnlMain.add(pnlMainTop, BorderLayout.NORTH);
         pnlMain.add(pnlMainBot, BorderLayout.SOUTH);
 
-        pnlMain.add(new JScrollPane(list), BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(list);
+//        pnlMain.add(scrollPane, BorderLayout.CENTER);
+        JScrollPane scrollPaneSummary = new JScrollPane();
+        tabsheet = new JTabbedPane();
+        tabsheet.addTab("Log", scrollPane);
+        tabsheet.addTab("Summary", scrollPaneSummary);
+        pnlMain.add(tabsheet, BorderLayout.CENTER);
 
 
         Container cn = this.getContentPane();

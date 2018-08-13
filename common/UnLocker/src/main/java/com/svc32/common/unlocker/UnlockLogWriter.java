@@ -1,22 +1,25 @@
 package com.svc32.common.unlocker;
 
+import com.svc32.common.TimeStampValue;
 import com.svc32.common.svc32Utils.file.FileFunctions;
 
-import static com.svc32.common.svc32Utils.date.DTFormats.parseDateTimeSecZ;
+import static com.svc32.common.svc32Utils.date.DTFormats.convertMs2H;
 import static com.svc32.common.svc32Utils.file.FileFunctions.*;
 import static com.svc32.common.svc32Utils.date.DTFormats.*;
 import static com.svc32.common.svc32Utils.file.FileFunctions.rewriteLastLine;
 
+import java.util.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Date;
+import java.util.List;
+import java.util.regex.Pattern;
 
 public class UnlockLogWriter implements Runnable {
     private final int delayInt;
-//    private static final int _delayInt_test = 1000;
+    //    private static final int _delayInt_test = 1000;
     private static final int _delayInt_test = 1000 * 5; // 5 sec
     private static final int _delayInt_run = 1000 * 60 * 5; // 5 min
     private static final String startedOnStr = "Started on ";
@@ -27,11 +30,17 @@ public class UnlockLogWriter implements Runnable {
     private final long prevStartSec;
     private final String currentDate;
 
+    public static final String START_STRING_PATTERN = "^.+(\\d{4}\\.\\d{2}\\.\\d{2}).*$";
+    public static final String ELAPSED_STRING_PATTERN = "^.+\\s((\\d+H)?\\s+(\\d+min)?\\s+(\\d+sec)?).*$";
+    public static final Pattern extractStartString = Pattern.compile(START_STRING_PATTERN);
+    public static final Pattern extractElapsedTimeString = Pattern.compile(ELAPSED_STRING_PATTERN);
+
     private boolean continueRun;
     private boolean startLinePrinted = false;
     private boolean isTheSameStartDay = false;
     private final Date startDateTime = new Date();
     private final String startDateTimeStr = getDateTimeSecZ(new Date());
+    private final Integer startYearInt = Integer.parseInt( startDateTimeStr.split("\\.")[0] );
 
     private long startTimeStamp;
     private File logFile;
@@ -66,7 +75,7 @@ public class UnlockLogWriter implements Runnable {
                 String prevStartSecStr = dateArray[1];
                 prevStartSec = Long.parseLong(prevStartSecStr);
                 elapsedTime = dateArray[2];
-                if (prevStartSec== 0 && elapsedTime.equals("Elapsed time:                   0sec")) {
+                if (prevStartSec == 0 && elapsedTime.equals("Elapsed time:                   0sec")) {
 
                 } else {
 
@@ -90,7 +99,7 @@ public class UnlockLogWriter implements Runnable {
 
         try {
             writeStartLine();
-
+            prepareSummaryReport();
             while (continueRun) {
                 Thread.sleep(delayInt);
 //                currentInterval = System.currentTimeMillis() - startTimeStamp + (4500 * 1000);
@@ -99,8 +108,7 @@ public class UnlockLogWriter implements Runnable {
                 String line = GetUTCdate(currentInterval)
                         .replace(" 0H", "   ")
                         .replace(" 0min", "     ")
-                        .replace(" 0sec", "     ")
-                        ;
+                        .replace(" 0sec", "     ");
                 robot.keyPress(KeyEvent.VK_NUM_LOCK);
                 robot.keyRelease(KeyEvent.VK_NUM_LOCK);
                 robot.keyPress(KeyEvent.VK_NUM_LOCK);
@@ -109,12 +117,62 @@ public class UnlockLogWriter implements Runnable {
 //                System.out.println(date);
             }
         } catch (InterruptedException e) {
-           Thread.currentThread().interrupt();
+            Thread.currentThread().interrupt();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             new Date();
         }
+
+    }
+
+    protected void prepareSummaryReport() {
+        List<String> list;
+        try {
+            list = ff.readFileLines();
+            Map<Integer, Long> whPerWeek = new TreeMap();
+
+
+            String startString = list.get(0);
+            String elapsedTimeString = list.get(1);
+            TimeStampValue timeStampValue = new TimeStampValue(startString, elapsedTimeString);
+            int weekNum = timeStampValue.getWeekOfYear();
+            long weekElapsedTime = 0;
+
+            Iterator it = list.iterator();
+            while (it.hasNext()) {
+                startString = (String) it.next();
+                elapsedTimeString = (String) it.next();
+                timeStampValue = new TimeStampValue(startString, elapsedTimeString);
+                int currentWeekNum = timeStampValue.getWeekOfYear();
+
+                if (currentWeekNum == 14) {
+                    System.out.println(currentWeekNum);
+                }
+
+                long elapsedTime = timeStampValue.getElapsedTime();
+                if (currentWeekNum == weekNum) {
+                    weekElapsedTime += elapsedTime;
+                } else {
+                    whPerWeek.put(new Integer(weekNum), new Long(weekElapsedTime));
+                    System.out.println(
+                            String.format(
+                                    "%1$s %2$2s %3$s %4$s %5$s",
+                                    "Week N ", weekNum,
+                                    "(" + getWeekDaysInterval(startYearInt, weekNum) + ")",
+                                    "ElapsedTime = ", convertMs2H(weekElapsedTime)
+                            )
+                    );
+                    weekElapsedTime = elapsedTime;
+                    weekNum++;
+                }
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println();
 
     }
 
@@ -145,7 +203,7 @@ public class UnlockLogWriter implements Runnable {
             rewriteLastLine(logFile, elapsedTimeStr + line);
         }
 
-        if (unlocker.getRowCount() == 2 )
+        if (unlocker.getRowCount() == 2)
             unlocker.changeString(elapsedTimeStr + line);
         else
             unlocker.addString(elapsedTimeStr + line);

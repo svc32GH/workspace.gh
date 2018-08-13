@@ -81,4 +81,17 @@ public class TestDates {
                         + "y2 = " + String.format("%1$2dY n", y2)
         );
     }
+
+    @Test
+    public void testConvertMs2H() {
+        String s = convertMs2H(3700000);
+        System.out.println(s);
+    }
+
+    @Test
+    public void testWeekDaysInterval() {
+        int week = 30;
+        String str = getWeekDaysInterval(2018, week);
+        System.out.println("str = " + str);
+    }
 }

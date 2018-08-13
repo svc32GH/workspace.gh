@@ -8,7 +8,11 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
+
 import static com.svc32.common.svc32Utils.date.DTFormats.*;
 import static com.svc32.common.svc32Utils.file.FileFunctions.*;
 
@@ -92,6 +96,53 @@ public class TestUnlockLogWriter {
     public void testReadLastLine() {
         String lastLine = rewriteLastLine(new File(path), "Elapsed time:         1H 15min 12sec");
         System.out.println("lastLine = " + lastLine);
+
+    }
+
+    @Test
+    public void testRegEx() {
+        String startString = "Started on 2018.01.14 at 11:21:33 EET";
+        String elapsedTimeString = "Elapsed time:        12H 15min 21sec";
+
+        Matcher matcherStartString = UnlockLogWriter.extractStartString.matcher(startString);
+        Matcher matcherElapsedTimeString = UnlockLogWriter.extractElapsedTimeString.matcher(elapsedTimeString);
+
+        boolean matcherStartStringFind = matcherStartString.find();
+        String startDate = matcherStartString.group(1);
+        System.out.println("matcherStartString.find()       = " + matcherStartStringFind
+                + ",        date = " + startDate
+        );
+        System.out.println("matcherElapsedTimeString.find() = " + matcherElapsedTimeString.find()
+                + ", elapsedTime = " + matcherElapsedTimeString.group(1)
+        );
+
+        String[] d = startDate.split("\\.");
+        int year = Integer.parseInt(d[0]);
+        int month = Integer.parseInt(d[1]);
+        int day = Integer.parseInt(d[2]);
+        int etH = Integer.parseInt(matcherElapsedTimeString.group(2).replace("H", ""));
+        int etM = Integer.parseInt(matcherElapsedTimeString.group(3).replace("min", ""));
+        int etS = Integer.parseInt(matcherElapsedTimeString.group(4).replace("sec", ""));
+
+        System.out.println("year  = " + year);
+        System.out.println("month = " + month);
+        System.out.println("day   = " + day);
+        System.out.println("H     = " + etH);
+        System.out.println("min   = " + etM);
+        System.out.println("sec   = " + etS);
+
+        GregorianCalendar calendar = new GregorianCalendar(year, month-1, day);
+//        calendar.setTime(new Date());
+//        calendar.set(year, month-1, day);
+
+        System.out.println("Calendar.WEEK_OF_YEAR                = " + calendar.get(Calendar.WEEK_OF_YEAR));
+
+        System.out.println();
+        for (int dd=1; dd<32; dd++) {
+            GregorianCalendar c = new GregorianCalendar(year, month-1, dd);
+            System.out.println(dd + " Calendar.WEEK_OF_YEAR = " + c.get(Calendar.WEEK_OF_YEAR));
+        }
+        System.out.println("calendar.isWeekDateSupported() = " + calendar.isWeekDateSupported());
 
     }
 

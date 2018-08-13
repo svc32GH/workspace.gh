@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="win-1251">
+</head>
+
+<body>
+  <form oninput="res.value=parseInt(n1.value)+parseInt(n2.value)">
+    <input type="number" id="n1" name="n1" />
+    +<input type="number" id="n2" name="n2" />
+    =<output name="res" for="n1 n2"></output>
+  </form>
+  <form oninput="n4.value=Math.round((n3.value-parseInt(n3.value))*1e10)/1e10">
+    <input type="text" id="n3" name="n3" />---fractional--->
+    <input type="text" id="n4" name="n4" />
+  </form>
+</body>
+
+</html>

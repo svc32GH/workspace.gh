@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="win-1251">
+</head>
+
+<body onload="onShow()">
+  <script>
+    var fi = (1 + Math.sqrt(5)) / 2;
+    var fi_= (1 - Math.sqrt(5)) / 2;
+    var sqrt5 = Math.sqrt(5);
+    var fibValue1 = 0;
+    var fibValue2 = 0;
+    
+    function pow(x, n) {
+      if (n < 0) return NaN;
+      if (x == 0 && n == 0) return NaN;
+      if (+(""+n).split(".")[0] != n) return NaN;
+      var result = 1;
+      for (var i = 0; i < n; i++) {
+        result *= x;
+      }
+      return result;
+    }
+    function fib(n) {
+      var a = 1,
+        b = 0,
+        x;
+      for (i = 0; i < n; i++) {
+        x = a + b;
+        a = b
+        b = x;
+      }
+      return b;
+    }
+    function fibBinet(n) {
+      var fibN = pow(fi, n);
+      var fib_N = pow(fi_, n);
+      var res = (fibN - fib_N) / sqrt5;
+//	  return res;
+	  return Math.round(res);
+    }
+    function onChangeInputValue(value) {
+      window.document.getElementsByName("res1")[0].value = fib(+value);
+      window.document.getElementsByName("res2")[0].value = fibBinet(+value);
+    }
+    function onShow() {
+      window.document.getElementsByName("n2")[0].readOnly = true;
+      window.document.getElementsByName("n2")[0].style.backgroundColor = "#A9CBDF";
+    }
+  </script>
+  <form oninput="onChangeInputValue(n1.value)">
+     <br/><input type="number" id="n1" name="n1" />
+          fib:<output name="res1" id="out1"></output>
+     <br/>
+     <br/><input type="number" id="n2" name="n2" />
+     fibBinet:<output name="res2" id="out2"></output>
+  </form>
+</body>
+
+</html>
