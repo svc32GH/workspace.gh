@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="win-1251">
+    <title>XSLT 2.0 Transformation</title>
+    <style type="text/css">
+
+        .cols {
+            width: 50%;
+            float: left;
+            text-align: center;
+        }
+
+        .cols a {
+            float: right;
+        }
+
+        .cols p {
+            width: 90%;
+        }
+
+        textarea {
+            width: 90%;
+        }
+
+        .col1 {
+            text-align: center;
+            margin-top: 10px;
+            padding-top: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            float: left;
+            width: 100%;
+            border-top: 1px solid #AAAAAA;
+            border-bottom: 3px solid #AAAAAA;
+        }
+
+        div > p {
+            margin-bottom: 0px;
+        }
+
+        .body > p {
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #AAAAAA;
+        }
+
+        .share {
+            font-size: 80%;
+            color: gray;
+            margin-top: 15px;
+            float: left;
+        }
+
+    </style>
+</head>
+<body>
+<script>
+    function loadResult(url, callBack) {
+        var xml = document.getElementsByName("xml")[0].value;
+        var xslt = document.getElementsByName("xsl")[0].value;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                callBack(this);
+            }
+        };
+        xhttp.open("POST", url, true);
+        xhttp.send(xml + "qwerty0123456789" + xslt);
+    }
+    function cbFunc(xhttp) {
+        document.getElementById("result").value = xhttp.responseText;
+    }
+</script>
+<form id="frm" method="post">
+    <div class="cols">
+        <p>XML</p>
+        <div class="textareacontainer">
+            <textarea name="xml" id="xml" rows="20" cols="20" wrap="off"></textarea>
+        </div>
+        <input id="checkXML" type="button" value="Check XML Well Formed" />
+    </div>
+    <div class="cols">
+        <p>XSLT</p>
+        <div class="textareacontainer">
+            <textarea name="xsl" id="xsl" rows="20" cols="20" wrap="off"></textarea>
+        </div>
+        <input id="checkXSL" type="button" value="Check XSL Validity" />
+    </div>
+    <div class="col1">
+        <input name="trans" id="trans" type="button" value="Transform XML with XSL" onclick="loadResult('', cbFunc)"/>
+        <p>Result</p>
+        <div class="textareacontainer">
+            <textarea name="result" id="result" rows="20" cols="20" wrap="off"></textarea>
+        </div>
+    </div>
+</form>
+
+
+</body>
+</html>

@@ -8,5 +8,14 @@
     <artifactId>xsltransform</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/net.sf.saxon/Saxon-HE -->
+        <dependency>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>Saxon-HE</artifactId>
+            <version>9.8.0-8</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
