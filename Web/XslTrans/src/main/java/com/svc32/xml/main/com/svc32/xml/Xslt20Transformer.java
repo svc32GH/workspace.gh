@@ -28,7 +28,7 @@ public class Xslt20Transformer {
         Source srcXsl = new StreamSource(rXsl);
         Transformer transformer = factory.newTransformer(srcXsl);
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
         Reader rXml = new StringReader(xml);
         Source srcXml = new StreamSource(rXml);

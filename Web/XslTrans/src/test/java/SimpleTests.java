@@ -26,18 +26,8 @@ public class SimpleTests {
     @Test
     public void testXslTransform() throws IOException, TransformerException {
         String xmlStr = readFile("simple.xml");
-        String regex = "(.*)>[\\s]*<(.*)";
-        String replacement = "$1><$2";
-
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(xmlStr);
-        while (matcher.find()) {
-            int count = matcher.groupCount();
-            String replaced = matcher.replaceAll(replacement);
-            System.out.println("count    = " + count);
-            System.out.println("replaced = " + replaced);
-        }
-
+        String regex = "(.*)>[\\s]*<";
+        String replacement = "$1><";
 
         String xmlStr2 = xmlStr
 //                .replaceAll("\r", "")
@@ -49,7 +39,7 @@ public class SimpleTests {
 //        System.out.println("xslStr = " + xslStr);
         Xslt20Transformer transformer = Xslt20Transformer.getInstance();
         String resXml = transformer.transform(xmlStr2, xslStr);
-        System.out.println("resXml = " + resXml);
+        System.out.println("resXml = \n" + resXml);
     }
 
     private String readFile(String path) throws IOException {
@@ -74,26 +64,26 @@ public class SimpleTests {
                 + "   <g>asd123cvb</g>\r\n"
                 + "   <h>asd123cvb</h>\r\n"
                 + "   <i>asd123cvb</i>\r\n"
-                + "<\\A>"
+                + "</A>"
                 ;
 
 //        String str2 = "121212121<b>asd123cvb</b>      <b>asd123cvb</b>";
-        String regex = "(.*)>[\\s]*<(.*)";
-        String res = str.replaceAll(regex, "$1><$2");
+        String regex = "(.*)>[\\s]*<";
+        String res = str.replaceAll(regex, "$1><");
         System.out.println("str   = \n" + str);
         System.out.println("regex = " + regex);
         System.out.println("res   = \n" + res);
 
-        res = res.replaceAll(regex, "$1><$2");
-        System.out.println("\n\nres   = \n" + res);
-
-        res = res.replaceAll(regex, "$1><$2");
-        System.out.println("\n\nres   = \n" + res);
-
-        res = res.replaceAll(regex, "$1><$2");
-        System.out.println("\n\nres   = \n" + res);
-
-        res = res.replaceAll(regex, "$1><$2");
-        System.out.println("\n\nres   = \n" + res);
+//        res = res.replaceAll(regex, "$1><$2");
+//        System.out.println("\n\nres   = \n" + res);
+//
+//        res = res.replaceAll(regex, "$1><$2");
+//        System.out.println("\n\nres   = \n" + res);
+//
+//        res = res.replaceAll(regex, "$1><$2");
+//        System.out.println("\n\nres   = \n" + res);
+//
+//        res = res.replaceAll(regex, "$1><$2");
+//        System.out.println("\n\nres   = \n" + res);
     }
 }
