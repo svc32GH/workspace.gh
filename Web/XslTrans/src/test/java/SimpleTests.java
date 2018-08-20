@@ -1,12 +1,10 @@
-import com.svc32.xml.main.com.svc32.xml.Xslt20Transformer;
+import com.svc32.xml.Xslt20Transformer;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SimpleTests {
 
@@ -30,9 +28,6 @@ public class SimpleTests {
         String replacement = "$1><";
 
         String xmlStr2 = xmlStr
-//                .replaceAll("\r", "")
-//                .replaceAll("\n", "")
-//                .replaceAll("\t", "")
                 .replaceAll(regex, replacement);
         String xslStr = readFile("simple.xsl");
 //        System.out.println("xmlStr = " + xmlStr);
