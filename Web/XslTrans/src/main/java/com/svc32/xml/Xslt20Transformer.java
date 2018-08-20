@@ -17,32 +17,36 @@ public class Xslt20Transformer {
         return Loader.INSTANCE;
     }
 
-    private Xslt20Transformer(){
+    private Xslt20Transformer() {
     }
 
     public static TransformerFactory getFactory() {
         return factory;
     }
 
+//    public String transform(String xml, String xsl) throws TransformerException, UnsupportedEncodingException {
+//        Reader rXsl = new StringReader(xsl);
+//        Source srcXsl = new StreamSource(rXsl);
+//        Transformer transformer = factory.newTransformer(srcXsl);
+//        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+//        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+//
+//        Reader rXml = new StringReader(xml);
+//        Source srcXml = new StreamSource(rXml);
+//
+//        OutputStream os = new ByteArrayOutputStream();
+//        StreamResult result = new StreamResult(os);
+//        transformer.transform(srcXml, result);
+//        String res = ((ByteArrayOutputStream) os).toString("UTF-8");
+//        return res;
+//    }
+
     public String transform(String xml, String xsl) throws TransformerException, UnsupportedEncodingException {
-        Reader rXsl = new StringReader(xsl);
-        Source srcXsl = new StreamSource(rXsl);
-        Transformer transformer = factory.newTransformer(srcXsl);
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-
-        Reader rXml = new StringReader(xml);
-        Source srcXml = new StreamSource(rXml);
-
-        OutputStream os = new ByteArrayOutputStream();
-        StreamResult result = new StreamResult(os);
-        transformer.transform(srcXml, result);
-        String res = ((ByteArrayOutputStream) os).toString("UTF-8");
-        return res;
-    }
-
-    public String transform(String xml, String xsl) throws TransformerException, UnsupportedEncodingException {
-        Transformer transformer = factory.newTransformer(new StreamSource(xsl));
+        Transformer transformer = factory.newTransformer(
+                new StreamSource(
+                        new StringReader(xsl)
+                )
+        );
         String res;
         if (xsl.contains(INDENT_YES))
             res = transformFormat(xml, transformer);
@@ -52,13 +56,21 @@ public class Xslt20Transformer {
     }
 
     public String transformUnformat(String xml, Transformer transformer) throws TransformerException, UnsupportedEncodingException {
+        OutputStream os = new ByteArrayOutputStream();
+        transformer.transform(
+                new StreamSource(
+                        new StringReader(xml)),
+                new StreamResult(os)
+        );
+        String res = ((ByteArrayOutputStream) os).toString("UTF-8");
+        return res;
 
     }
 
     public String transformFormat(String xml, Transformer transformer) throws TransformerException, UnsupportedEncodingException {
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-        transformer.transform(srcXml, result);
+        return transformUnformat(unFormatXml(xml), transformer);
     }
 
     public String unFormatXml(String xml) {

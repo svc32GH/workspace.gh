@@ -62,8 +62,8 @@ public class MainServlet extends HttpServlet {
         String command = getValue("command", part_names);
         System.out.println(command);
 
-        command = getValue("command2", part_names);
-        System.out.println(command);
+//        command = getValue("command2", part_names);
+//        System.out.println(command);
 
         String xmlStr = getValue("xml", part_names);
         String xslStr = getValue("xsl", part_names);
