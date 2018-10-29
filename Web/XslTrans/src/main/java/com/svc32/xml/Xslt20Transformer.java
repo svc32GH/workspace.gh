@@ -1,13 +1,38 @@
 package com.svc32.xml;
 
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 
 public class Xslt20Transformer {
-    private final static TransformerFactory factory = TransformerFactory.newInstance();
+    private final static TransformerFactory TRANSFORMER_FACTORY = TransformerFactory.newInstance();
     private final static String INDENT_YES = "indent=\"yes\"";
+
+    private final static DocumentBuilderFactory DOCUMENT_BUILDER_FACTORY = DocumentBuilderFactory.newInstance();
+    static {
+        DOCUMENT_BUILDER_FACTORY.setValidating(false);
+        DOCUMENT_BUILDER_FACTORY.setNamespaceAware(true);
+    }
+
+    private class SimpleErrorHandler implements ErrorHandler {
+        public void warning(SAXParseException e) throws SAXException {
+            System.out.println(e.getMessage());
+        }
+
+        public void error(SAXParseException e) throws SAXException {
+            System.out.println(e.getMessage());
+        }
+
+        public void fatalError(SAXParseException e) throws SAXException {
+            System.out.println(e.getMessage());
+        }
+    }
 
     private static class Loader {
         static final Xslt20Transformer INSTANCE = new Xslt20Transformer();
@@ -20,14 +45,14 @@ public class Xslt20Transformer {
     private Xslt20Transformer() {
     }
 
-    public static TransformerFactory getFactory() {
-        return factory;
-    }
+//    public static TransformerFactory getTransformerFactory() {
+//        return TRANSFORMER_FACTORY;
+//    }
 
 //    public String transform(String xml, String xsl) throws TransformerException, UnsupportedEncodingException {
 //        Reader rXsl = new StringReader(xsl);
 //        Source srcXsl = new StreamSource(rXsl);
-//        Transformer transformer = factory.newTransformer(srcXsl);
+//        Transformer transformer = TRANSFORMER_FACTORY.newTransformer(srcXsl);
 //        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 //        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 //
@@ -42,7 +67,7 @@ public class Xslt20Transformer {
 //    }
 
     public String transform(String xml, String xsl) throws TransformerException, UnsupportedEncodingException {
-        Transformer transformer = factory.newTransformer(
+        Transformer transformer = TRANSFORMER_FACTORY.newTransformer(
                 new StreamSource(
                         new StringReader(xsl)
                 )

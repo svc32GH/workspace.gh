@@ -59,6 +59,36 @@ public class FileFunctions {
         this.bReader = new BufferedReader(new InputStreamReader(fis, this.charsetName));
     }
 
+    private static String readFromInputStream(InputStream inputStream) throws IOException {
+        StringBuilder resultStringBuilder = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                resultStringBuilder.append(line).append("\n");
+            }
+        }
+        return resultStringBuilder.toString();
+    }
+
+    public static String readFileRowsFromClassPath(String path) throws IOException {
+        return readFileRowsFromClassPath(path, Charset.defaultCharset());
+    }
+
+    public static String readFileRowsFromClassPath(String path, Charset cs) throws IOException {
+//        Class clazz = FileFunctions.class;
+//        InputStream inputStream = clazz.getResourceAsStream(path);
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream("fileTest.txt");
+
+        if (inputStream == null) {
+            throw new FileNotFoundException(path);
+        }
+
+        String data = readFromInputStream(inputStream);
+        return data;
+    }
+
     public static List<String> readFileRows(File file) throws IOException {
         return readFileRows(file, Charset.defaultCharset());
     }
