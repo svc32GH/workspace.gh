@@ -19,6 +19,10 @@ public class FileFunctions {
     private String charsetName;
     private BufferedReader bReader;
 
+    public FileFunctions() {
+
+    }
+
     public FileFunctions(File file, String csName) throws IOException {
         _FileFunctions(file, csName);
     }
@@ -70,22 +74,38 @@ public class FileFunctions {
         return resultStringBuilder.toString();
     }
 
-    public static String readFileRowsFromClassPath(String path) throws IOException {
-        return readFileRowsFromClassPath(path, Charset.defaultCharset());
+    private static String readFromInputStreamAndRevert(InputStream inputStream) throws IOException {
+        StringBuilder resultStringBuilder = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                StringBuilder lineBuilder = new StringBuilder(line);
+                resultStringBuilder.append(lineBuilder.reverse()).append("\n");
+            }
+        }
+        return resultStringBuilder.toString();
     }
 
-    public static String readFileRowsFromClassPath(String path, Charset cs) throws IOException {
-//        Class clazz = FileFunctions.class;
-//        InputStream inputStream = clazz.getResourceAsStream(path);
-
+    /**
+     * Reads and concatenates lines from file represented by path
+     * If reverse = true: each line is reversed.
+     * @param   path        file location.
+     * @param   reverse     boolean condition to reverse lines in the file content.
+     * @return  file content as a string
+     */
+    public String readFileRowsFromClassPath(String path, boolean reverse) throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream("fileTest.txt");
+        InputStream inputStream = classLoader.getResourceAsStream(path);
 
         if (inputStream == null) {
             throw new FileNotFoundException(path);
         }
 
-        String data = readFromInputStream(inputStream);
+        String data;
+        if (reverse)
+            data = readFromInputStreamAndRevert(inputStream);
+        else
+            data = readFromInputStream(inputStream);
         return data;
     }
 
