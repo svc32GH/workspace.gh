@@ -13,6 +13,8 @@ public class CommonTests {
     public void testReverSymbols() throws IOException {
         String path = "SomeText.txt";
         File file = new File(path);
+        boolean fe = file.exists();
+        System.out.println(fe);
         FileFunctions ff = new FileFunctions();
         String rows = ff.readFileRowsFromClassPath(path, true);
         System.out.println(rows);
