@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class TestFileFunctions {
-    private static final String path = "C:\\wsRoot.git\\svc32WS\\common\\UnLocker\\WorkLog2.txt";
+    private static final String path = "D:\\wsRoot.gh\\svc32WS\\common\\svc32Utils\\WorkLog2.txt";
 
     @Test
     public void testReadFilelLines() throws IOException {

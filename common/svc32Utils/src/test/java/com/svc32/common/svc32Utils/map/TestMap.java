@@ -2,7 +2,7 @@ package com.svc32.common.svc32Utils.map;
 
 import org.junit.Test;
 
-import java.util.Set;
+import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -25,6 +25,14 @@ public class TestMap {
         Set<String> valueSet = m2mMap.valueSet();
         assertEquals("m2mMap.valueSet().size() should be equal to 4", 4, valueSet.size());
         System.out.println(valueSet);
+        for (String key : m2mMap.keySet()) {
+            System.out.println("key = " + key + ", value = " + m2mMap.get(key));
+        }
+        System.out.println("m2mMap.entrySet() = " + m2mMap.entrySet());
+
+        List list = new ArrayList(m2mMap.entrySet());
+        System.out.println("listOfEntrySet    = " + list);
+
 
 //        System.out.println("m2mMap.getSize()      = " + m2mMap.getSize());
 //        System.out.println("m2mMap.getSize('aaa') = " + m2mMap.getSize("aaa"));

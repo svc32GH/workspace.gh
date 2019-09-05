@@ -2,7 +2,7 @@ package com.svc32.common.svc32Utils.file;
 
 import java.io.*;
 import java.nio.charset.Charset;
-import java.nio.file.Path;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
@@ -17,29 +17,33 @@ public class FileFunctions {
 
     private File file;
     private String charsetName;
+    private FileInputStream fis;
     private BufferedReader bReader;
 
     public FileFunctions() {
 
     }
 
-    public FileFunctions(File file, String csName) throws IOException {
-        _FileFunctions(file, csName);
+    public FileFunctions(File file, String csName, boolean createIfNotExist) throws IOException {
+        _FileFunctions(file, csName, createIfNotExist);
     }
 
     public FileFunctions(File file) throws IOException {
-        _FileFunctions(file, Charset.defaultCharset().name());
+        _FileFunctions(file, Charset.defaultCharset().name(), false);
     }
 
-    private void _FileFunctions(File file, String csName) throws IOException {
+    private void _FileFunctions(File file, String csName, boolean createIfNotExist) throws IOException {
         if (!file.exists()) {
-            File parent = file.getParentFile();
-            parent.mkdirs();
-            file.createNewFile();
+            if (createIfNotExist) {
+                File parent = file.getParentFile();
+                parent.mkdirs();
+                file.createNewFile();
+            } else
+                throw new FileNotFoundException();
         }
         this.file = file;
         this.charsetName = csName;
-        FileInputStream fis = new FileInputStream(this.file);
+        this.fis = new FileInputStream(this.file);
         this.bReader = new BufferedReader(new InputStreamReader(fis, this.charsetName));
     }
 
@@ -396,4 +400,36 @@ public class FileFunctions {
         return res;
     }
 
+    public static void fillFileList(File file, List files) {
+        if (file.isFile()) {
+            files.add(file);
+            if (file.getName().endsWith(".lnk")) {
+                WindowsShortcut ws = null;
+                try {
+                    ws = new WindowsShortcut(file);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                String rfn = ws.getRealFilename();
+                File rfnFile = new File(rfn);
+                if (rfnFile.exists())
+                    files.add(rfnFile);
+            }
+        }
+        else
+            for (File f : file.listFiles())
+                fillFileList(f, files);
+    }
+
+    public static String fileListToString(List<File> fList) {
+        StringBuilder sb = new StringBuilder("");
+        if (fList.size() > 0) {
+            sb.append(fList.get(0).getAbsolutePath());
+            for (int i=1; i<fList.size(); i++)
+                sb.append("\n" + fList.get(i).getAbsolutePath());
+        }
+        return sb.toString();
+    }
 }

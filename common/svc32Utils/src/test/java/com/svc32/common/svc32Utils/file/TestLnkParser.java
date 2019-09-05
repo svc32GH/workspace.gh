@@ -16,9 +16,11 @@ public class TestLnkParser {
         boolean isDir = ws.isDirectory();
         boolean isLoc = ws.isLocal();
         String rfn = ws.getRealFilename();
-        System.out.println("isDir = " + isDir);
-        System.out.println("isLoc = " + isLoc);
-        System.out.println("rfn   = " + rfn);
+//        File rfnFile = new File(rfn);
+        System.out.println("isDir       = " + isDir);
+        System.out.println("isLoc       = " + isLoc);
+        System.out.println("rfn         = " + rfn);
+        System.out.println("file.name   = " + file.getName());
     }
 
     @Test

@@ -45,4 +45,34 @@ public class M2MMap<K, V> {
         return valueSet;
     }
 
+    public Set<Map.Entry<K, Set<V>>> entrySet() {
+        return m2mMap.entrySet();
+    }
+
+    public int getMaxValuesetCount() {
+        int i = 0;
+        for (K key : m2mMap.keySet()) {
+            Set<V> vSet = m2mMap.get(key);
+            int size = vSet.size();
+            if (i < size)
+                i = size;
+        }
+        return i;
+    }
+
+    public int getNoUniqueValuesetCount() {
+        int i = 0;
+        for (K key : m2mMap.keySet()) {
+            Set<V> vSet = m2mMap.get(key);
+            int size = vSet.size();
+            if (size > 1)
+                i++;
+        }
+        return i;
+    }
+
+    public void clear() {
+        m2mMap.clear();
+    }
+
 }
