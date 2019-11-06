@@ -1,22 +1,18 @@
 package com.svc32.common.pc;
 
-import com.opencsv.CSVReader;
-import com.svc32.common.svc32Utils.file.FileFunctions;
-
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static com.svc32.common.svc32Utils.file.FileFunctions.readFileRows;
 
 public class Main {
     public static final String csvPath = "D:\\SVC\\doc\\Private Data\\contacts.csv";
-    public static final String sep = "\",\"";
-    public static final String comma = ",";
-    public static final String doubleQuote = "\"";
+    public static final String colA = "Name";
+    public static final String colB = "Given Name";
+    public static final String colD = "Family Name";
+    public static final String colAP = "Phone 1 - Value";
+    public static final String colAR = "Phone 2 - Value";
 
     public static void main(String[] args) {
         try {
@@ -27,22 +23,27 @@ public class Main {
     }
 
     private void run() throws IOException {
+        CsvDocker csvDokcer = new CsvDocker(csvPath);
+        PhoneMap phoneMap = new PhoneMap();
 
-//        List<List<String>> records = new ArrayList<List<String>>();
-//        try (CSVReader csvReader = new CSVReader(new FileReader(csvPath));) {
-//            String[] values = null;
-//            while ((values = csvReader.readNext()) != null) {
-//                records.add(Arrays.asList(values));
-//            }
-//        }
-
-
-        CsvDokcer csvDokcer = new CsvDokcer(csvPath);
-        List<String> headers = csvDokcer.getHeaders();
-        System.out.println(headers);
-
-//        for (int i=0; i<csvRows.size(); i++) {
-//            System.out.println(csvRows.get(i));
-//        }
+        for (int i = 0; i < csvDokcer.size(); i++) {
+            String phoneString = csvDokcer.getColumnValue(colAP, i);
+            String owner = csvDokcer.getColumnValue(colA, i);
+            String[] phones = phoneString.split(" ::: ");
+            for (int j = 0; j < phones.length; j++) {
+                String phone = phones[j].replace(" ", "")
+                        .replace("+38", "")
+                        .replace("38", "");
+                if (phone.length() > 0)
+                    phoneMap.put(phone, owner);
+            }
+        }
+        Map<String, List<String>> duplicates = phoneMap.getDuplicates();
+        Object[] keySet = duplicates.keySet().toArray();
+        for (int i = 0; i < keySet.length; i++) {
+            String key = (String) keySet[i];
+            List<String> owners = duplicates.get(key);
+            System.out.println(key + " : " + owners);
+        }
     }
 }
