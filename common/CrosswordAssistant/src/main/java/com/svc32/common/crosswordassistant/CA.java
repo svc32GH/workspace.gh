@@ -13,8 +13,8 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 public class CA {
-//    private static final String vocZipFile = "russian.zip";
-    private static final String vocZipFile = "lop2v2.zip";
+    private static final String vocZipFile = "russian.zip";
+//    private static final String vocZipFile = "lop2v2.zip";
     private CrossSet cSet;
 
     public static void main(String[] args) {
