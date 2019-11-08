@@ -1,10 +1,10 @@
 package com.svc32.common.pc;
 
+import com.svc32.common.svc32Utils.map.StringListMap;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
-import static com.svc32.common.svc32Utils.file.FileFunctions.readFileRows;
 
 public class Main {
     public static final String csvPath = "D:\\SVC\\doc\\Private Data\\contacts.csv";
@@ -24,7 +24,7 @@ public class Main {
 
     private void run() throws IOException {
         CsvDocker csvDokcer = new CsvDocker(csvPath);
-        PhoneMap phoneMap = new PhoneMap();
+        StringListMap stringListMap = new StringListMap();
 
         for (int i = 0; i < csvDokcer.size(); i++) {
             String phoneString = csvDokcer.getColumnValue(colAP, i);
@@ -35,10 +35,10 @@ public class Main {
                         .replace("+38", "")
                         .replace("38", "");
                 if (phone.length() > 0)
-                    phoneMap.put(phone, owner);
+                    stringListMap.put(phone, owner);
             }
         }
-        Map<String, List<String>> duplicates = phoneMap.getDuplicates();
+        Map<String, List<String>> duplicates = stringListMap.getDuplicates();
         Object[] keySet = duplicates.keySet().toArray();
         for (int i = 0; i < keySet.length; i++) {
             String key = (String) keySet[i];

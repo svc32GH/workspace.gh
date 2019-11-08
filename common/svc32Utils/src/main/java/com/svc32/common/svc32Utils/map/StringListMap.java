@@ -1,11 +1,11 @@
-package com.svc32.common.pc;
+package com.svc32.common.svc32Utils.map;
 
 import java.util.*;
 
-public class PhoneMap extends HashMap<String, List<String>> {
+public class StringListMap extends HashMap<String, List<String>> {
     private Map<String, List<String>> ownerMap = new TreeMap();
 
-    public PhoneMap() {
+    public StringListMap() {
     }
 
     public void put(String phone, String owner) {
