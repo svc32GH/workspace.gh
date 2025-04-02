@@ -1,16 +1,15 @@
 package com.svc32.common.unlocker;
 
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Arrays;
 
 import static com.svc32.common.svc32Utils.file.FileFunctions.*;
 
 public class Main {
 //    private final static String path = "C:\\wsRoot.git\\svc32WS\\common\\UnLocker\\WorkLog.log";
+    private final static String path = "C:\\ws.gh\\my\\common\\UnLocker\\WorkLog.log";
 
     /**
      * @param  args
@@ -24,6 +23,7 @@ public class Main {
         System.out.println("log file: " + logFilePath);
         boolean isTestMode = getRunMode(args);
 
+//        SwingUtilities.invokeLater
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -50,16 +50,21 @@ public class Main {
 
     private static String getFilePath(String[] args) {
         StringBuilder res = new StringBuilder("");
-        for (int i=0; i<args.length; i++)
-            if (args[i].startsWith("-lp=")) {
-                res.append(args[i].replace("-lp=", ""));
-                break;
+        if (args.length > 0) {
+            for (String arg : args) {
+                if (arg.startsWith("-lp=")) {
+                    res.append(arg.replace("-lp=", ""));
+                    break;
+                }
             }
+        } else {
+            res.append(path);
+        }
         return res.toString();
     }
 
-    // return true = Run in Test Mode
-    // return fale = Run in Ordinary Mode
+    // return true  = Run in Test Mode
+    // return false = Run in Ordinary Mode
     private static boolean getRunMode(String[] args) {
         boolean res = false;
         for (int i = 0; i < args.length; i++)

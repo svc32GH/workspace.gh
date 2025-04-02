@@ -134,15 +134,15 @@ public class UnlockLogWriter implements Runnable {
 
 
             String startString = list.get(0);
-            String elapsedTimeString = list.get(1);
+            String elapsedTimeString = list.size() > 1 ?  list.get(1) : null;
             TimeStampValue timeStampValue = new TimeStampValue(startString, elapsedTimeString);
             int weekNum = timeStampValue.getWeekOfYear();
             long weekElapsedTime = 0;
 
-            Iterator it = list.iterator();
+            Iterator<String> it = list.iterator();
             while (it.hasNext()) {
                 startString = (String) it.next();
-                elapsedTimeString = (String) it.next();
+                elapsedTimeString = it.hasNext() ? (String) it.next() : "Elapsed time:                   0sec";
                 timeStampValue = new TimeStampValue(startString, elapsedTimeString);
                 int currentWeekNum = timeStampValue.getWeekOfYear();
 
@@ -155,13 +155,11 @@ public class UnlockLogWriter implements Runnable {
                     weekElapsedTime += elapsedTime;
                 } else {
                     whPerWeek.put(new Integer(weekNum), new Long(weekElapsedTime));
-                    System.out.println(
-                            String.format(
-                                    "%1$s %2$2s %3$s %4$s %5$s",
-                                    "Week N ", weekNum,
-                                    "(" + getWeekDaysInterval(startYearInt, weekNum) + ")",
-                                    "ElapsedTime = ", convertMs2H(weekElapsedTime)
-                            )
+                    System.out.printf(
+                            "%1$s %2$2s %3$s %4$s %5$s%n",
+                            "Week N ", weekNum,
+                            "(" + getWeekDaysInterval(startYearInt, weekNum) + ")",
+                            "ElapsedTime = ", convertMs2H(weekElapsedTime)
                     );
                     weekElapsedTime = elapsedTime;
                     weekNum++;

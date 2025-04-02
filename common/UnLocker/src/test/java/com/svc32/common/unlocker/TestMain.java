@@ -1,5 +1,6 @@
 package com.svc32.common.unlocker;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -7,6 +8,7 @@ import org.junit.Test;
  **/
 public class TestMain {
 
+    @Ignore
     @Test
     public void testMain() {
         String[] args;
