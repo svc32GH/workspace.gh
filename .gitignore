@@ -7,3 +7,8 @@
 **/.recommenders/
 **/RemoteSystemsTempFiles/
 **/.metadata
+
+**/.idea
+**/*.iml
+
+**/node_modules

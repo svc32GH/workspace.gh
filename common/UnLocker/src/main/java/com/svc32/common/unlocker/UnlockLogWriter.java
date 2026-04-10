@@ -142,7 +142,7 @@ public class UnlockLogWriter implements Runnable {
             Iterator it = list.iterator();
             while (it.hasNext()) {
                 startString = (String) it.next();
-                elapsedTimeString = (String) it.next();
+                elapsedTimeString = it.hasNext() ? (String) it.next() : "Week N  42 (2025.10.15 Ср - 2025.10.21 Вт) ElapsedTime =  19H 16min 46sec";
                 timeStampValue = new TimeStampValue(startString, elapsedTimeString);
                 int currentWeekNum = timeStampValue.getWeekOfYear();
 

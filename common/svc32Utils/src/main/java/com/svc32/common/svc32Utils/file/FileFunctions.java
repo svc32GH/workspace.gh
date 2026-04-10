@@ -2,6 +2,7 @@ package com.svc32.common.svc32Utils.file;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.security.KeyStore;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Formatter;
@@ -432,4 +433,13 @@ public class FileFunctions {
         }
         return sb.toString();
     }
+
+//    private KeyStore keyStore(String file, char[] password) throws Exception {
+//        KeyStore keyStore = KeyStore.getInstance("PKCS12");
+//        File key = ResourceUtils.getFile(file);
+//        try (InputStream in = new FileInputStream(key)) {
+//            keyStore.load(in, password);
+//        }
+//        return keyStore;
+//    }
 }

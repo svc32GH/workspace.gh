@@ -1,0 +1,45 @@
+192 packages are looking for funding
+23:23run `npm fund` for details
+Removing template package using npm...
+
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
+
+removed 1 package, and audited 1422 packages in 2s
+
+192 packages are looking for funding
+  run `npm fund` for details
+  
+6 high severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+  
+Run `npm audit` for details.
+
+Success! Created react-tutorial at D:\wsRoot.gh\svc32WS\Web\React\02\react-tutorial
+Inside that directory, you can run several commands:
+
+ npm start
+   Starts the development server.
+   
+ npm run build
+   Bundles the app into static files for production.
+   
+ npm test
+   Starts the test runner.
+   
+ npm run eject
+   Removes this tool and copies build dependencies, configuration files
+   and scripts into the app directory. If you do this, you can’t go back!
+   
+We suggest that you begin by typing:
+
+  cd react-tutorial
+  npm start
+  
+Happy hacking!
+npm notice
+npm notice New minor version of npm available! 8.11.0 -> 8.12.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v8.12.1
+npm notice Run npm install -g npm@8.12.1 to update!
+npm notice

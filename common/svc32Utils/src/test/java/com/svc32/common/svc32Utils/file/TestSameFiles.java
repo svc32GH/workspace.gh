@@ -15,7 +15,8 @@ import static com.svc32.common.svc32Utils.file.FileFunctions.*;
 public class TestSameFiles {
     private static final String pathDisc = "D:\\";
     private static final String pathDir1 = "D:\\Doc";
-    private static final String pathDir2 = "C:\\Users\\Serge\\Downloads";
+//    private static final String pathDir2 = "C:\\Users\\Serge\\Downloads";
+    private static final String pathDir2 = "C:\\Users\\Serge\\Google Drive\\Doc";
 
     @Test
     public void testSameFiles() {
