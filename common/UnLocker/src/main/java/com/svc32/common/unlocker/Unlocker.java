@@ -22,8 +22,12 @@ public class Unlocker extends JFrame {
 //    private static final int y = 133;
 
     //    Note ProBook 4710s
-    private static final int x = 1086;
-    private static final int y = 7;
+//    private static final int x = 1086;
+//    private static final int y = 7;
+
+    //    Note Dell <Luxoft-Citi>
+    private static final int x = -882;
+    private static final int y = 282;
 
 //    //    1-st Monitor, right-midle:
 //    private static final int x = 680;

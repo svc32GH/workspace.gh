@@ -1,0 +1,38 @@
+target/
+surefire-reports/
+*.bat
+
+### IntelliJ IDEA ###
+.idea/
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+*.iws
+*.iml
+*.ipr
+
+### Eclipse ###
+.spt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/scr/main/**/build/
+!**/scr/test/**/build/
+
+### VS Code ###
+.vcode/
+
+### Mac OS ###
+.DS_Store

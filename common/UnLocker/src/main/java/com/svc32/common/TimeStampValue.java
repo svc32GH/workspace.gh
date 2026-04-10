@@ -22,20 +22,26 @@ public class TimeStampValue {
     public TimeStampValue(String startString, String elapsedTimeString) {
         try {
             Matcher matcherStartString = UnlockLogWriter.extractStartString.matcher(startString);
-            Matcher matcherElapsedTimeString = UnlockLogWriter.extractElapsedTimeString.matcher(elapsedTimeString);
             matcherStartString.find();
-            matcherElapsedTimeString.find();
-
             String startDate = matcherStartString.group(1);
 
-            String hourGrp = matcherElapsedTimeString.group(2);
-            hour = hourGrp == null ? 0 : Integer.parseInt(matcherElapsedTimeString.group(2).replace("H", ""));
+            if (elapsedTimeString != null) {
+                Matcher matcherElapsedTimeString = UnlockLogWriter.extractElapsedTimeString.matcher(elapsedTimeString);
+                matcherElapsedTimeString.find();
 
-            String minGrp = matcherElapsedTimeString.group(3);
-            min = minGrp == null ? 0 : Integer.parseInt(minGrp.replace("min", ""));
+                String hourGrp = matcherElapsedTimeString.group(2);
+                hour = hourGrp == null ? 0 : Integer.parseInt(matcherElapsedTimeString.group(2).replace("H", ""));
 
-            String secGrp = matcherElapsedTimeString.group(4);
-            sec = secGrp == null ? 0 : Integer.parseInt(secGrp.replace("sec", ""));
+                String minGrp = matcherElapsedTimeString.group(3);
+                min = minGrp == null ? 0 : Integer.parseInt(minGrp.replace("min", ""));
+
+                String secGrp = matcherElapsedTimeString.group(4);
+                sec = secGrp == null ? 0 : Integer.parseInt(secGrp.replace("sec", ""));
+            } else {
+                hour = 0;
+                min = 0;
+                sec = 0;
+            }
 
             elapsedTime = convertHMS2Ms(hour, min, sec);
 
