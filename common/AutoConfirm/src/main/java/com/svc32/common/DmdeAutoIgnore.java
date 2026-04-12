@@ -26,6 +26,7 @@ public class DmdeAutoIgnore {
 
     public static void main(String[] args) {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        log.info("DMDE Autoconfirm started on "+new Date());
 
         executor.scheduleWithFixedDelay(() -> {
             try {
@@ -33,7 +34,7 @@ public class DmdeAutoIgnore {
             } catch (Exception e) {
                 log.log(Level.WARNING, "Error during scan", e);
             }
-        }, 0, 500, TimeUnit.MILLISECONDS);
+        }, 0, 1000, TimeUnit.MILLISECONDS);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             log.info("Shutting down...");
@@ -72,11 +73,11 @@ public class DmdeAutoIgnore {
 
         if (hasWinError1117 && hasPleaseWait) {
             if (ignoreButton != null) {
-                System.out.println("Clicking &Ignore on "+new Date());
+                log.info("Clicking &Ignore on "+new Date());
                 USER32.SendMessage(ignoreButton, BM_CLICK, new WPARAM(0), new LPARAM(0));
                 Thread.sleep(1200);
             } else if (ignoreAllButton != null) {
-                System.out.println("Clicking Ignore all on "+new Date());
+                log.info("Clicking Ignore all on "+new Date());
                 USER32.SendMessage(ignoreAllButton, BM_CLICK, new WPARAM(0), new LPARAM(0));
                 Thread.sleep(1200);
             }
